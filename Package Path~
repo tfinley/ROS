@@ -1,0 +1,3 @@
+ROS_PACKAGE_PATH="/opt/ros/hydro/share:/opt/ros/hydro/stacks"
+
+/opt/ros/hydro/share:/opt/ros/hydro/stacks:/home/taylor/src/ros
