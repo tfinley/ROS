@@ -1,0 +1,1 @@
+/home/taylor/src/pcl/examples/translate_to_pick/build/CMakeFiles/translate_to_pick.dir

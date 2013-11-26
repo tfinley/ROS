@@ -353,6 +353,12 @@ pcl_msgs_DIR:PATH=/opt/ros/hydro/share/pcl_msgs/cmake
 //The directory containing a CMake configuration file for pcl_ros.
 pcl_ros_DIR:PATH=/opt/ros/hydro/share/pcl_ros/cmake
 
+//Value Computed by CMake
+pick_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/pick
+
+//Value Computed by CMake
+pick_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/pick
+
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/hydro/share/pluginlib/cmake
 
@@ -536,7 +542,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=4
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

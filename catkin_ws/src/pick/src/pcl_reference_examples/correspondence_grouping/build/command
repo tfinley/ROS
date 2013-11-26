@@ -1,0 +1,2 @@
+./correspondence_grouping lifting_eye.pcd kinect_top_rgb_no_floor.pcd --algorithm GC
+

@@ -16,11 +16,15 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "catkin_generated/order_packages.cmake"
   "my_pcl_tutorial/catkin_generated/ordered_paths.cmake"
   "my_pcl_tutorial/catkin_generated/package.cmake"
+  "pick/catkin_generated/ordered_paths.cmake"
+  "pick/catkin_generated/package.cmake"
   "/home/taylor/src/ros/catkin_ws/src/CMakeLists.txt"
   "/home/taylor/src/ros/catkin_ws/src/beginner_tutorials/CMakeLists.txt"
   "/home/taylor/src/ros/catkin_ws/src/beginner_tutorials/package.xml"
   "/home/taylor/src/ros/catkin_ws/src/my_pcl_tutorial/CMakeLists.txt"
   "/home/taylor/src/ros/catkin_ws/src/my_pcl_tutorial/package.xml"
+  "/home/taylor/src/ros/catkin_ws/src/pick/CMakeLists.txt"
+  "/home/taylor/src/ros/catkin_ws/src/pick/package.xml"
   "/opt/ros/hydro/share/actionlib/cmake/actionlib-msg-extras.cmake"
   "/opt/ros/hydro/share/actionlib/cmake/actionlibConfig-version.cmake"
   "/opt/ros/hydro/share/actionlib/cmake/actionlibConfig.cmake"
@@ -211,6 +215,7 @@ SET(CMAKE_MAKEFILE_PRODUCTS
   "gtest/CMakeFiles/CMakeDirectoryInformation.cmake"
   "beginner_tutorials/CMakeFiles/CMakeDirectoryInformation.cmake"
   "my_pcl_tutorial/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "pick/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -268,4 +273,8 @@ SET(CMAKE_DEPEND_INFO_FILES
   "my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_cpp.dir/DependInfo.cmake"
   "my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_lisp.dir/DependInfo.cmake"
   "my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_py.dir/DependInfo.cmake"
+  "pick/CMakeFiles/marker_test.dir/DependInfo.cmake"
+  "pick/CMakeFiles/picked_icp.dir/DependInfo.cmake"
+  "pick/CMakeFiles/picked_segmentation.dir/DependInfo.cmake"
+  "pick/CMakeFiles/transform_test.dir/DependInfo.cmake"
   )

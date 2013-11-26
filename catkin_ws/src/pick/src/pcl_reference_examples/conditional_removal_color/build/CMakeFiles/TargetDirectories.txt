@@ -1,0 +1,2 @@
+/home/taylor/src/pcl/examples/conditional_removal_color/build/CMakeFiles/conditional_removal_color.dir
+/home/taylor/src/pcl/examples/conditional_removal_color/build/CMakeFiles/conditional_removal_color_outlier.dir

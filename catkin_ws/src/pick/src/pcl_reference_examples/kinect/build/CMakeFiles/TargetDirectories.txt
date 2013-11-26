@@ -1,0 +1,5 @@
+/home/taylor/src/pcl/examples/kinect/build/CMakeFiles/kinect_viewer.dir
+/home/taylor/src/pcl/examples/kinect/build/CMakeFiles/kinect_viewer_stripped.dir
+/home/taylor/src/pcl/examples/kinect/build/CMakeFiles/kinect_visualizer.dir
+/home/taylor/src/pcl/examples/kinect/build/CMakeFiles/kinect_visualizer2.dir
+/home/taylor/src/pcl/examples/kinect/build/CMakeFiles/openni_save_pcd.dir

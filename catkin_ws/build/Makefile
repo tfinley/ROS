@@ -835,6 +835,58 @@ topic_tools_generate_messages_py/fast:
 	$(MAKE) -f my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_py.dir/build.make my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_py.dir/build
 .PHONY : topic_tools_generate_messages_py/fast
 
+#=============================================================================
+# Target rules for targets named marker_test
+
+# Build rule for target.
+marker_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 marker_test
+.PHONY : marker_test
+
+# fast build rule for target.
+marker_test/fast:
+	$(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/build
+.PHONY : marker_test/fast
+
+#=============================================================================
+# Target rules for targets named picked_icp
+
+# Build rule for target.
+picked_icp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 picked_icp
+.PHONY : picked_icp
+
+# fast build rule for target.
+picked_icp/fast:
+	$(MAKE) -f pick/CMakeFiles/picked_icp.dir/build.make pick/CMakeFiles/picked_icp.dir/build
+.PHONY : picked_icp/fast
+
+#=============================================================================
+# Target rules for targets named picked_segmentation
+
+# Build rule for target.
+picked_segmentation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 picked_segmentation
+.PHONY : picked_segmentation
+
+# fast build rule for target.
+picked_segmentation/fast:
+	$(MAKE) -f pick/CMakeFiles/picked_segmentation.dir/build.make pick/CMakeFiles/picked_segmentation.dir/build
+.PHONY : picked_segmentation/fast
+
+#=============================================================================
+# Target rules for targets named transform_test
+
+# Build rule for target.
+transform_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 transform_test
+.PHONY : transform_test
+
+# fast build rule for target.
+transform_test/fast:
+	$(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/build
+.PHONY : transform_test/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -901,6 +953,10 @@ help:
 	@echo "... topic_tools_generate_messages_cpp"
 	@echo "... topic_tools_generate_messages_lisp"
 	@echo "... topic_tools_generate_messages_py"
+	@echo "... marker_test"
+	@echo "... picked_icp"
+	@echo "... picked_segmentation"
+	@echo "... transform_test"
 .PHONY : help
 
 

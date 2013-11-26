@@ -104,16 +104,32 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-# add_executable(pick_node src/pick_node.cpp)
+add_executable(picked_segmentation src/picked_segmentation.cpp)
+add_executable(picked_icp src/picked_icp.cpp)
+add_executable(transform_test src/transform_test.cpp)
+add_executable(marker_test src/marker_test.cpp)
+
+
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(pick_node pick_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(pick_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(picked_segmentation
+   ${catkin_LIBRARIES}
+ )
+target_link_libraries(picked_icp
+   ${catkin_LIBRARIES}
+ )
+target_link_libraries(transform_test
+   ${catkin_LIBRARIES}
+ )
+target_link_libraries(marker_test
+   ${catkin_LIBRARIES}
+ )
+
+
 
 #############
 ## Install ##

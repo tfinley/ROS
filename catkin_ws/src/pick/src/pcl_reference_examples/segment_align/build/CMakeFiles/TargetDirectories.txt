@@ -1,0 +1,7 @@
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/live_segment_downsample_translate_align.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/live_segment_downsample_translate_align_rotate.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/live_viewer_start.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/pcl_visualizer_picked_segment.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/segment_align.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/segment_downsample_translate_align.dir
+/home/taylor/src/pcl/examples/segment_align/build/CMakeFiles/segment_translate_align.dir

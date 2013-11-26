@@ -1,2 +1,0 @@
-rosrun pick picked_segmentation input:=/camera/depth/points
-

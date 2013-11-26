@@ -1,0 +1,5 @@
+/home/taylor/src/pcl/examples/spheres/build/CMakeFiles/plane_seg_color_seg_sphere_seg_measure_show.dir
+/home/taylor/src/pcl/examples/spheres/build/CMakeFiles/plane_seg_sphere_seg_measure_show.dir
+/home/taylor/src/pcl/examples/spheres/build/CMakeFiles/sphere_segmentation.dir
+/home/taylor/src/pcl/examples/spheres/build/CMakeFiles/sphere_segmentation_measure.dir
+/home/taylor/src/pcl/examples/spheres/build/CMakeFiles/sphere_segmentation_measure_show.dir

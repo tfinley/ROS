@@ -7,3 +7,4 @@
 SUBDIRS(gtest)
 SUBDIRS(beginner_tutorials)
 SUBDIRS(my_pcl_tutorial)
+SUBDIRS(pick)

@@ -2,59 +2,127 @@
 
 Originally created by Taylor Finley, 2013.11.18
 License: BSD
-Description: Segment a point cloud around a specific point picked from RVIZ
+Description: 	Segment a point cloud around a specific point picked from RVIZ
+		Now incorporated a subscriber to /clicked_point
 
 */
 
 #include <ros/ros.h>
-// PCL specific includes
-// deleted for hydro: #include <pcl/ros/conversions.h>
-#include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
+#include <pcl_ros/point_cloud.h> 
+#include <boost/foreach.hpp> 
+#include <pcl/io/pcd_io.h>  
 #include <pcl/sample_consensus/model_types.h>
 #include <pcl/sample_consensus/method_types.h>
 #include <pcl/segmentation/sac_segmentation.h>
-//added for hydro:
+#include <pcl/filters/passthrough.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <geometry_msgs/PointStamped.h>
+#include <std_msgs/Header.h>
 
+using namespace std;
+
+//global variables
 ros::Publisher pub;
+float picked_x = 0.0;
+float picked_y = 0.0;
+float picked_z = 0.0;
+bool picked (false);
+
+//typedefs
+typedef pcl::PointXYZRGB rgbpoint;
+typedef pcl::PointCloud<pcl::PointXYZRGB> cloudrgb;
+typedef cloudrgb::Ptr cloudrgbptr;
 
 void 
-cloud_cb (const pcl::PCLPointCloud2ConstPtr& input)
+point_cb (const boost::shared_ptr<const geometry_msgs::PointStamped>& point_ptr)
 {
-  pcl::PCLPointCloud2 cloud_segmented;
+  picked_x = point_ptr->point.x;
+  picked_y = point_ptr->point.y;
+  picked_z = point_ptr->point.z;  
+  cout << "picked" << endl;
+  picked = true;
+}
 
-  pcl::ModelCoefficients coefficients;
-  pcl::PointIndices inliers;
-  // Create the segmentation object
-  pcl::SACSegmentation<pcl::PointXYZ> seg;
-  // Optional
-  seg.setOptimizeCoefficients (true);
-  // Mandatory
-  seg.setModelType (pcl::SACMODEL_PLANE);
-  seg.setMethodType (pcl::SAC_RANSAC);
-  seg.setDistanceThreshold (0.01);
+void 
+cloud_cb (const sensor_msgs::PointCloud2ConstPtr& cloud)
+{
+  if (picked)
+  {  
+	cloudrgbptr PC (new cloudrgb());
+  	cloudrgbptr PC_filtered_x (new cloudrgb());
+  	cloudrgbptr PC_filtered_xy (new cloudrgb());
+	  cloudrgbptr PC_filtered_xyz (new cloudrgb());
+  	pcl::fromROSMsg(*cloud, *PC); //Now you can process this PC using the pcl functions 
+  	sensor_msgs::PointCloud2 cloud_filtered;
 
-  seg.setInputCloud (cloud.makeShared ());
-  seg.segment (inliers, coefficients); 
+  	//calculate bounding box
+  	float delta = 0.2;
+  	float xmin = picked_x - delta;
+  	float xmax = picked_x + delta;
+  	float ymin = picked_y - delta;
+  	float ymax = picked_y + delta;
+  	float zmin = picked_z - delta;
+  	float zmax = picked_z + delta;
+	
+  	//----------------------------------------
+  	//------Start Passthrough Filter----------
+  	//----------------------------------------
+
+  	// Create the filtering object x
+  	pcl::PassThrough<pcl::PointXYZRGB> pass_x;
+  	pass_x.setInputCloud (PC);
+  	pass_x.setFilterFieldName ("x");
+  	pass_x.setFilterLimits (xmin, xmax);
+  	//pass_x.setFilterLimitsNegative (true);
+  	pass_x.filter (*PC_filtered_x);
+
+  	//I'm not sure if I need to create new objects for each passthrough or if I can just reset it each time with new settings.
+  	//I'm going to be safe and create new objects for each.
+
+  	// Create the filtering object y
+  	pcl::PassThrough<pcl::PointXYZRGB> pass_y;
+  	pass_y.setInputCloud (PC_filtered_x);
+  	pass_y.setFilterFieldName ("y");
+  	pass_y.setFilterLimits (ymin, ymax);
+  	//pass_y.setFilterLimitsNegative (true);
+  	pass_y.filter (*PC_filtered_xy);
+
+  	// Create the filtering object z
+  	pcl::PassThrough<pcl::PointXYZRGB> pass_z;
+  	pass_z.setInputCloud (PC_filtered_xy);
+  	pass_z.setFilterFieldName ("z");
+  	pass_z.setFilterLimits (zmin, zmax);
+  	//pass_z.setFilterLimitsNegative (true);
+  	pass_z.filter (*PC_filtered_xyz);
+
+  	//Convert the pcl cloud back to rosmsg
+  	pcl::toROSMsg(*PC_filtered_xyz, cloud_filtered);
   
-  // Publish the model coefficients
-  pub.publish (coefficients);
+  	//Set the header of the cloud
+  	cloud_filtered.header.frame_id = cloud->header.frame_id;
+  	// Publish the data
+  	//You may have to set the header frame id of the cloud_filtered also
+  	pub.publish (cloud_filtered);
+  }
 }
 
 int
 main (int argc, char** argv)
 {
   // Initialize ROS
-  ros::init (argc, argv, "my_pcl_tutorial");
+  ros::init (argc, argv, "picked_segmentation");
   ros::NodeHandle nh;
 
+  // Create a ROS subscriber for the clicked point
+  ros::Subscriber sub1 = nh.subscribe ("/clicked_point", 1, point_cb);
+
   // Create a ROS subscriber for the input point cloud
-  ros::Subscriber sub = nh.subscribe ("input", 1, cloud_cb);
+  ros::Subscriber sub2 = nh.subscribe ("/camera/depth_registered/points", 1, cloud_cb);
 
   // Create a ROS publisher for the output point cloud
-  pub = nh.advertise<sensor_msgs::PointCloud2> ("output", 1);
+  pub = nh.advertise<sensor_msgs::PointCloud2> ("/camera/depth_registered/seg_points", 1);
 
   // Spin
   ros::spin ();

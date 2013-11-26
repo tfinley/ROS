@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+project(spheres)
+
+find_package(PCL 1.2 REQUIRED)
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
+add_executable (sphere_segmentation sphere_segmentation.cpp)
+target_link_libraries (sphere_segmentation ${PCL_LIBRARIES})
+
+add_executable (sphere_segmentation_measure sphere_segmentation_measure.cpp)
+target_link_libraries (sphere_segmentation_measure ${PCL_LIBRARIES})
+
+add_executable (sphere_segmentation_measure_show sphere_segmentation_measure_show.cpp)
+target_link_libraries (sphere_segmentation_measure_show ${PCL_LIBRARIES})
+
+add_executable (plane_seg_sphere_seg_measure_show plane_seg_sphere_seg_measure_show.cpp)
+target_link_libraries (plane_seg_sphere_seg_measure_show ${PCL_LIBRARIES})
+
+add_executable (plane_seg_color_seg_sphere_seg_measure_show plane_seg_color_seg_sphere_seg_measure_show.cpp)
+target_link_libraries (plane_seg_color_seg_sphere_seg_measure_show ${PCL_LIBRARIES})
+

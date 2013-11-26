@@ -1,0 +1,33 @@
+0.00865817,8.65817/ 			clipping range
+0.115241,-0.150541,1.07672/		focal point
+-0.0301409,-0.0132788,-1.5093/		position
+-0.0175373,-0.998492,-0.0520123/	viewup
+0.523599/				distance
+960,540/				window size
+51,52					window pos
+
+
+Clipping Range / Focal Point / Position / ViewUp / Distance / Window Size / Window Pos]
+
+*************************************************************8
+
+from example
+
+
+0.00522511,5.22511/** 0.0427789,-0.185814,0.0496169/** 0.0497412,-0.196849,-0.0978747/** -0.0956887,-0.992963,0.0697719/0.523599/631,491/1650,152 
+
+
+m_pclVisualizer = new pcl::visualization::PCLVisualizer("PCL_Visualizer");
+m_pclVisualizer->setBackgroundColor(0, 0, 0);
+m_pclVisualizer->setCameraPosition(0.0497412, -0.196849, -0.0978747, 0.0427789, -0.185814, 0.0496169, -0.0956887, -0.992963, 0.0697719);
+m_pclVisualizer->setCameraFieldOfView(0.523599);
+m_pclVisualizer->setCameraClipDistances(0.00522511, 5.22511);
+m_pclVisualizer->setPosition(1650, 152);
+m_pclVisualizer->setSize(631, 491); 
+
+kinect:
+
+m_pclVisualizer->setCameraPosition(0.00, 0.00, -1.25, 0.00, 0.00, 0.625, -0.00, -0.99999, 0.000);
+
+0.00402803,4.02803/-0.0708495,0.0211992,0.638437/-0.00441712,-0.0291335,-1.22573/-0.0228238,-0.999397,0.0261705/0.523599/1863,1176/57,24
+

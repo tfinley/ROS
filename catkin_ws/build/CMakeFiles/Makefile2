@@ -598,7 +598,7 @@ clean: beginner_tutorials/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 beginner_tutorials/CMakeFiles/talker.dir/all:
 	$(MAKE) -f beginner_tutorials/CMakeFiles/talker.dir/build.make beginner_tutorials/CMakeFiles/talker.dir/depend
 	$(MAKE) -f beginner_tutorials/CMakeFiles/talker.dir/build.make beginner_tutorials/CMakeFiles/talker.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  10
 	@echo "Built target talker"
 .PHONY : beginner_tutorials/CMakeFiles/talker.dir/all
 
@@ -1277,7 +1277,7 @@ clean: my_pcl_tutorial/CMakeFiles/nodelet_generate_messages_py.dir/clean
 my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/all:
 	$(MAKE) -f my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/build.make my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/depend
 	$(MAKE) -f my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/build.make my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  7
 	@echo "Built target openni_save_pcd"
 .PHONY : my_pcl_tutorial/CMakeFiles/openni_save_pcd.dir/all
 
@@ -1799,6 +1799,167 @@ my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_py.dir/clean:
 
 # clean rule for target.
 clean: my_pcl_tutorial/CMakeFiles/topic_tools_generate_messages_py.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory pick
+
+# Convenience name for "all" pass in the directory.
+pick/all: pick/CMakeFiles/marker_test.dir/all
+pick/all: pick/CMakeFiles/picked_icp.dir/all
+pick/all: pick/CMakeFiles/picked_segmentation.dir/all
+pick/all: pick/CMakeFiles/transform_test.dir/all
+.PHONY : pick/all
+
+# Convenience name for "clean" pass in the directory.
+pick/clean: pick/CMakeFiles/marker_test.dir/clean
+pick/clean: pick/CMakeFiles/picked_icp.dir/clean
+pick/clean: pick/CMakeFiles/picked_segmentation.dir/clean
+pick/clean: pick/CMakeFiles/transform_test.dir/clean
+.PHONY : pick/clean
+
+# Convenience name for "preinstall" pass in the directory.
+pick/preinstall:
+.PHONY : pick/preinstall
+
+#=============================================================================
+# Target rules for target pick/CMakeFiles/marker_test.dir
+
+# All Build rule for target.
+pick/CMakeFiles/marker_test.dir/all:
+	$(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/depend
+	$(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  6
+	@echo "Built target marker_test"
+.PHONY : pick/CMakeFiles/marker_test.dir/all
+
+# Include target in all.
+all: pick/CMakeFiles/marker_test.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pick/CMakeFiles/marker_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/marker_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 0
+.PHONY : pick/CMakeFiles/marker_test.dir/rule
+
+# Convenience name for target.
+marker_test: pick/CMakeFiles/marker_test.dir/rule
+.PHONY : marker_test
+
+# clean rule for target.
+pick/CMakeFiles/marker_test.dir/clean:
+	$(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/clean
+.PHONY : pick/CMakeFiles/marker_test.dir/clean
+
+# clean rule for target.
+clean: pick/CMakeFiles/marker_test.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target pick/CMakeFiles/picked_icp.dir
+
+# All Build rule for target.
+pick/CMakeFiles/picked_icp.dir/all:
+	$(MAKE) -f pick/CMakeFiles/picked_icp.dir/build.make pick/CMakeFiles/picked_icp.dir/depend
+	$(MAKE) -f pick/CMakeFiles/picked_icp.dir/build.make pick/CMakeFiles/picked_icp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  8
+	@echo "Built target picked_icp"
+.PHONY : pick/CMakeFiles/picked_icp.dir/all
+
+# Include target in all.
+all: pick/CMakeFiles/picked_icp.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pick/CMakeFiles/picked_icp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/picked_icp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 0
+.PHONY : pick/CMakeFiles/picked_icp.dir/rule
+
+# Convenience name for target.
+picked_icp: pick/CMakeFiles/picked_icp.dir/rule
+.PHONY : picked_icp
+
+# clean rule for target.
+pick/CMakeFiles/picked_icp.dir/clean:
+	$(MAKE) -f pick/CMakeFiles/picked_icp.dir/build.make pick/CMakeFiles/picked_icp.dir/clean
+.PHONY : pick/CMakeFiles/picked_icp.dir/clean
+
+# clean rule for target.
+clean: pick/CMakeFiles/picked_icp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target pick/CMakeFiles/picked_segmentation.dir
+
+# All Build rule for target.
+pick/CMakeFiles/picked_segmentation.dir/all:
+	$(MAKE) -f pick/CMakeFiles/picked_segmentation.dir/build.make pick/CMakeFiles/picked_segmentation.dir/depend
+	$(MAKE) -f pick/CMakeFiles/picked_segmentation.dir/build.make pick/CMakeFiles/picked_segmentation.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  9
+	@echo "Built target picked_segmentation"
+.PHONY : pick/CMakeFiles/picked_segmentation.dir/all
+
+# Include target in all.
+all: pick/CMakeFiles/picked_segmentation.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pick/CMakeFiles/picked_segmentation.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/picked_segmentation.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 0
+.PHONY : pick/CMakeFiles/picked_segmentation.dir/rule
+
+# Convenience name for target.
+picked_segmentation: pick/CMakeFiles/picked_segmentation.dir/rule
+.PHONY : picked_segmentation
+
+# clean rule for target.
+pick/CMakeFiles/picked_segmentation.dir/clean:
+	$(MAKE) -f pick/CMakeFiles/picked_segmentation.dir/build.make pick/CMakeFiles/picked_segmentation.dir/clean
+.PHONY : pick/CMakeFiles/picked_segmentation.dir/clean
+
+# clean rule for target.
+clean: pick/CMakeFiles/picked_segmentation.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target pick/CMakeFiles/transform_test.dir
+
+# All Build rule for target.
+pick/CMakeFiles/transform_test.dir/all:
+	$(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/depend
+	$(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/taylor/src/ros/catkin_ws/build/CMakeFiles  11
+	@echo "Built target transform_test"
+.PHONY : pick/CMakeFiles/transform_test.dir/all
+
+# Include target in all.
+all: pick/CMakeFiles/transform_test.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+pick/CMakeFiles/transform_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/transform_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taylor/src/ros/catkin_ws/build/CMakeFiles 0
+.PHONY : pick/CMakeFiles/transform_test.dir/rule
+
+# Convenience name for target.
+transform_test: pick/CMakeFiles/transform_test.dir/rule
+.PHONY : transform_test
+
+# clean rule for target.
+pick/CMakeFiles/transform_test.dir/clean:
+	$(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/clean
+.PHONY : pick/CMakeFiles/transform_test.dir/clean
+
+# clean rule for target.
+clean: pick/CMakeFiles/transform_test.dir/clean
 .PHONY : clean
 
 #=============================================================================

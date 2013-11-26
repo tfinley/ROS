@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "pick")
+set(pick_MAINTAINER "taylor <finley.taylor@gmail.com>")
+set(pick_DEPRECATED "")
+set(pick_VERSION "0.0.0")
+set(pick_BUILD_DEPENDS "pcl_conversions" "pcl_ros" "roscpp" "sensor_msgs" "libpcl-all-dev")
+set(pick_RUN_DEPENDS "pcl_conversions" "pcl_ros" "roscpp" "sensor_msgs" "libpcl-all")
+set(pick_BUILDTOOL_DEPENDS "catkin")
