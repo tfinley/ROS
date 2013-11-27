@@ -36,7 +36,7 @@
 void chatterCallback(const std_msgs::Bool::ConstPtr& msg)
 {
  if (msg->data) std::cout << "I heard: True"  << std::endl;
- else std::cout << "I heard: False"  << std::endl;
+ else std::cout << "I didn't hear TRUE"  << std::endl;
 }
 // %EndTag(CALLBACK)%
 

@@ -22,6 +22,7 @@ Description: 	Recieve segmented point cloud and picked point
 #include <sensor_msgs/PointCloud2.h>
 #include <geometry_msgs/PointStamped.h>
 #include <std_msgs/Header.h>
+#include <std_msgs/Bool.h>
 #include <pcl/registration/icp.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
@@ -43,13 +44,22 @@ typedef cloudxyz::Ptr cloudxyzptr;
 ros::Publisher pub1;
 ros::Publisher vis_pub;
 ros::Publisher marker_pub;
+Eigen::Matrix4f Tm180;
 float picked_x = 0.0;
 float picked_y = 0.0;
 float picked_z = 0.0;
 bool picked (false);
+bool flipped (false);
 cloudrgbptr cloud_source (new cloudrgb());	//Loaded source cloud - should I put this in the align callback?
 cloudrgbptr cloud_translated (new cloudrgb());	//Translated cloud using point
 cloudxyzptr cloud_arrow (new cloudxyz());	//points for arrow
+
+void
+flipped_cb (const std_msgs::Bool::ConstPtr& msg)
+{
+   if (msg->data) flipped = true;
+   else flipped = false;
+}
 
 void 
 point_cb (const boost::shared_ptr<const geometry_msgs::PointStamped>& point_ptr)
@@ -78,6 +88,7 @@ align_cb (const sensor_msgs::PointCloud2ConstPtr& cloud)
 			0, 1, 0, picked_y,
 			0, 0, 1, picked_z,
 			0, 0, 0, 1;
+	if (flipped) Tm = Tm * Tm180; //flip it if requested per topic
 	pcl::transformPointCloud(*cloud_source, *cloud_translated, Tm);
 
 	// ICP
@@ -210,11 +221,20 @@ main (int argc, char** argv)
   arrowEndPt.z = 0.00;
   cloud_arrow->push_back(arrowEndPt);
 
+  //create rotation matrix
+  Tm180 << 	-1, 0, 0, 0,
+		0, -1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1;
+
   // Create a ROS subscriber for the clicked point
   ros::Subscriber sub1 = nh.subscribe ("/clicked_point", 1, point_cb);
 
   // Create a ROS subscriber for the input point cloud
   ros::Subscriber sub2 = nh.subscribe ("/camera/depth_registered/seg_points", 1, align_cb);
+
+  // Create a ROS subscriber for the flipped boolean
+  ros::Subscriber sub3 = nh.subscribe("flip", 10, flipped_cb);
 
   // Create a ROS publisher for the output point cloud
   pub1 = nh.advertise<sensor_msgs::PointCloud2> ("/aligned_cloud", 1);

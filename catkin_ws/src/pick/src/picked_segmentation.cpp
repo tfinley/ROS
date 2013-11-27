@@ -119,7 +119,10 @@ main (int argc, char** argv)
   ros::Subscriber sub1 = nh.subscribe ("/clicked_point", 1, point_cb);
 
   // Create a ROS subscriber for the input point cloud
-  ros::Subscriber sub2 = nh.subscribe ("/camera/depth_registered/points", 1, cloud_cb);
+  //ros::Subscriber sub2 = nh.subscribe ("/camera/depth_registered/points", 1, cloud_cb);  //live from kinect
+  ros::Subscriber sub2 = nh.subscribe ("/cloud_pcd", 1, cloud_cb);  //offline from pcd to pointcloud
+
+
 
   // Create a ROS publisher for the output point cloud
   pub = nh.advertise<sensor_msgs::PointCloud2> ("/camera/depth_registered/seg_points", 1);

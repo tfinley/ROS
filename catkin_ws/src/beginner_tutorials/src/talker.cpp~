@@ -80,7 +80,7 @@ int main(int argc, char **argv)
    * buffer up before throwing some away.
    */
 // %Tag(PUBLISHER)%
-  ros::Publisher chatter_pub = n.advertise<std_msgs::Bool>("chatter", 1000);
+  ros::Publisher chatter_pub = n.advertise<std_msgs::Bool>("flip", 10);
 // %EndTag(PUBLISHER)%
 
 // %Tag(LOOP_RATE)%
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
      */
 // %Tag(FILL_MESSAGE)%
     std_msgs::Bool msg;
-    bool flipped (true);
+    bool flipped (false);
     msg.data = flipped;
 // %EndTag(FILL_MESSAGE)%
 

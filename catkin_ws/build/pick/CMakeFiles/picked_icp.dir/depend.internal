@@ -78,6 +78,7 @@ pick/CMakeFiles/picked_icp.dir/src/picked_icp.cpp.o
  /opt/ros/hydro/include/sensor_msgs/Image.h
  /opt/ros/hydro/include/sensor_msgs/PointCloud2.h
  /opt/ros/hydro/include/sensor_msgs/PointField.h
+ /opt/ros/hydro/include/std_msgs/Bool.h
  /opt/ros/hydro/include/std_msgs/ColorRGBA.h
  /opt/ros/hydro/include/std_msgs/Header.h
  /opt/ros/hydro/include/tf/LinearMath/Matrix3x3.h

@@ -1,0 +1,9 @@
+<launch>
+  <node name="pcd_to_pointcloud" pkg="pcl_ros" type="pcd_to_pointcloud" args="/home/taylor/src/data_pcd/top/inputCloud0.pcd 0.1 _frame_id:=/camera_rgb_optical_frame"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/taylor/.rviz/lifting_eye.rviz"/>
+  <node name="picked_segmentation" pkg="pick" type="picked_segmentation" output="screen"/>
+  <node name="picked_icp" pkg="pick" type="picked_icp" output="screen"/>
+  <node pkg="dynamic_reconfigure" type="dynparam" name="dynparam" args="set /camera/driver depth_registration true" />
+</launch>
+
+
