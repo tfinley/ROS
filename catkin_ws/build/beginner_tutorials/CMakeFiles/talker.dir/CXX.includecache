@@ -9,8 +9,8 @@
 /home/taylor/src/ros/catkin_ws/src/beginner_tutorials/src/talker.cpp
 ros/ros.h
 /home/taylor/src/ros/catkin_ws/src/beginner_tutorials/src/ros/ros.h
-std_msgs/String.h
-/home/taylor/src/ros/catkin_ws/src/beginner_tutorials/src/std_msgs/String.h
+std_msgs/Bool.h
+/home/taylor/src/ros/catkin_ws/src/beginner_tutorials/src/std_msgs/Bool.h
 sstream
 -
 
@@ -628,7 +628,7 @@ ros/forwards.h
 
 /opt/ros/hydro/include/rosconsole/macros_generated.h
 
-/opt/ros/hydro/include/std_msgs/String.h
+/opt/ros/hydro/include/std_msgs/Bool.h
 string
 -
 vector

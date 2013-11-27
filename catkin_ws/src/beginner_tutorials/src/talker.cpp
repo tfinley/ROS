@@ -29,7 +29,7 @@
 #include "ros/ros.h"
 // %EndTag(ROS_HEADER)%
 // %Tag(MSG_HEADER)%
-#include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
 // %EndTag(MSG_HEADER)%
 
 #include <sstream>
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
    * buffer up before throwing some away.
    */
 // %Tag(PUBLISHER)%
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  ros::Publisher chatter_pub = n.advertise<std_msgs::Bool>("chatter", 1000);
 // %EndTag(PUBLISHER)%
 
 // %Tag(LOOP_RATE)%
@@ -100,15 +100,13 @@ int main(int argc, char **argv)
      * This is a message object. You stuff it with data, and then publish it.
      */
 // %Tag(FILL_MESSAGE)%
-    std_msgs::String msg;
-
-    std::stringstream ss;
-    ss << "hello world " << count;
-    msg.data = ss.str();
+    std_msgs::Bool msg;
+    bool flipped (false);
+    msg.data = flipped;
 // %EndTag(FILL_MESSAGE)%
 
 // %Tag(ROSCONSOLE)%
-    ROS_INFO("%s", msg.data.c_str());
+    std::cout << msg.data  << std::endl;
 // %EndTag(ROSCONSOLE)%
 
     /**

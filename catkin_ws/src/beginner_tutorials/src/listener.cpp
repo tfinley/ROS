@@ -27,15 +27,16 @@
 
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
-#include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
 
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
 // %Tag(CALLBACK)%
-void chatterCallback(const std_msgs::String::ConstPtr& msg)
+void chatterCallback(const std_msgs::Bool::ConstPtr& msg)
 {
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
+ if (msg->data) std::cout << "I heard: True"  << std::endl;
+ else std::cout << "I heard: False"  << std::endl;
 }
 // %EndTag(CALLBACK)%
 
@@ -48,7 +49,7 @@ int main(int argc, char **argv)
    * directly, but for most command-line programs, passing argc and argv is the easiest
    * way to do it.  The third argument to init() is the name of the node.
    *
-   * You must call one of the versions of ros::init() before using any other
+   * You must call one of the version s of ros::init() before using any other
    * part of the ROS system.
    */
   ros::init(argc, argv, "listener");
