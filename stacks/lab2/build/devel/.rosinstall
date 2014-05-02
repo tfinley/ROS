@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/taylor/src/ros/stacks/lab2/build/devel/setup.sh

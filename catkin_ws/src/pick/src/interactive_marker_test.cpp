@@ -2,16 +2,7 @@
 
 Originally created by Taylor Finley, 2013.11.21
 License: BSD
-Description: 	This will manually create a two points to create an arrow marker
- It will then publish out the marker to rviz to display the arrow
-
-ARROW DETAILS
-
-Start/End Points
-
-You can also specify a start/end point for the arrow, using the points member. If you put points into the points member, it will assume you want to do things this way.
-The point at index 0 is assumed to be the start point, and the point at index 1 is assumed to be the end.
-scale.x is the shaft diameter, and scale.y is the head diameter. If scale.z is not zero, it specifies the head length.
+Description: 	This is a test to get a interactive arror working as a button
 
 */
 
@@ -71,8 +62,8 @@ void processFeedback( const visualization_msgs::InteractiveMarkerFeedbackConstPt
 void makeButtonMarker()
 {
   InteractiveMarker int_marker;
-  int_marker.header.frame_id = "/base_link";
-  int_marker.pose.position.y = -3.0 ;
+  int_marker.header.frame_id = "/camera_rgb_optical_frame";
+  //int_marker.pose.position.y = 3.0 ;
   int_marker.scale = 1;
 
   int_marker.name = "button";
@@ -83,7 +74,36 @@ void makeButtonMarker()
   control.interaction_mode = InteractiveMarkerControl::BUTTON;
   control.name = "button_control";
 
-  Marker marker = makeBox( int_marker );
+  // Marker marker = makeBox( int_marker );
+
+  	// Arrow Marker
+	visualization_msgs::Marker marker;
+    	marker.header.frame_id = "/camera_rgb_optical_frame";
+    	marker.header.stamp =  ros::Time::now();
+
+    	marker.type = visualization_msgs::Marker::ARROW;
+    	marker.action = visualization_msgs::Marker::ADD;
+    	marker.id = 0;
+    	// Arrow Scale
+    	marker.scale.x = 0.25;
+    	marker.scale.y = 0.5;
+    	marker.scale.z = 0.5;
+    	// arrow is red
+    	marker.color.r = 1.0;
+    	marker.color.a = 0.5;
+	//set center point
+    	geometry_msgs::Point p0;
+    	p0.x = 0.0;
+    	p0.y = 3.0;
+    	p0.z = 0.0;
+    	marker.points.push_back(p0);
+	//set end point
+    	geometry_msgs::Point p1;
+    	p1.x = 0.0;
+    	p1.y = 4.0;
+    	p1.z = 0.0;
+    	marker.points.push_back(p1);
+
   control.markers.push_back( marker );
   control.always_visible = true;
   int_marker.controls.push_back(control);
@@ -91,68 +111,7 @@ void makeButtonMarker()
   server->insert(int_marker);
   server->setCallback(int_marker.name, &processFeedback);
 
-/*
 
-
-  // create an interactive marker server on the topic namespace simple_marker
-  interactive_markers::InteractiveMarkerServer server("simple_marker");
-
-  // create an interactive marker for our server
-  visualization_msgs::InteractiveMarker int_marker;
-  int_marker.header.frame_id = "/camera_rgb_optical_frame";
-  int_marker.name = "interactive_arrow";
-  int_marker.description = "arrow_button";
-  //int_marker.scale = 1;
-
-  // create a grey box marker
-  visualization_msgs::Marker arrow_marker;
-  arrow_marker.type = visualization_msgs::Marker::ARROW;
-   
-  // Arrow Scale
-  arrow_marker.scale.x = 0.015;
-  arrow_marker.scale.y = 0.025;
-
-  // arrow is red
-  arrow_marker.color.r = 1.0;
-  arrow_marker.color.a = 0.5;
-
-  geometry_msgs::Point p0;
-  p0.x = -0.128;
-  p0.y = -0.061;
-  p0.z = 1.423;
-
-  //points.points.push_back(p0);
-  arrow_marker.points.push_back(p0);
-
-  geometry_msgs::Point p1;
-  p1.x = -0.128;
-  p1.y = -0.151;
-  p1.z = 1.449;
-
-  //points.points.push_back(p1);
-  arrow_marker.points.push_back(p1);
-
-  // create a non-interactive control which contains the arrow
-  visualization_msgs::InteractiveMarkerControl button_control;
-  button_control.always_visible = true;
-  button_control.name = "button_control";
-  button_control.interaction_mode = visualization_msgs::InteractiveMarkerControl::BUTTON;
-  button_control.markers.push_back( arrow_marker );
-
-  // add the control to the interactive marker
-  int_marker.controls.push_back( button_control );
-
-  server.insert(int_marker);
-  //server.setCallback(int_marker.name, );
- 
-  // 'commit' changes and send to all clients
-  server.applyChanges();
-
-  // start the ROS main loop
-  ros::spin();
-
-
-*/
 }
 
 int

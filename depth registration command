@@ -1,0 +1,1 @@
+rosrun dynamic_reconfigure dynparam set /camera/driver depth_registration true

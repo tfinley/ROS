@@ -1,0 +1,10 @@
+<launch>
+	<arg name="dist" default="0.50" />
+
+  	<param name="move/target_distance" value="$(arg dist)" type="double" />
+
+  	<node name="stage_ros" pkg="stage_ros" type="stageros" args="$(find stage_ros)/world/willow-erratic.world " />
+
+  	<node name="move" pkg="lab1" type="move.py"  />
+
+</launch>

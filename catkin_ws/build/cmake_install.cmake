@@ -86,8 +86,12 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/taylor/src/ros/catkin_ws/build/gtest/cmake_install.cmake")
   INCLUDE("/home/taylor/src/ros/catkin_ws/build/beginner_tutorials/cmake_install.cmake")
-  INCLUDE("/home/taylor/src/ros/catkin_ws/build/my_pcl_tutorial/cmake_install.cmake")
+  INCLUDE("/home/taylor/src/ros/catkin_ws/build/me539/cmake_install.cmake")
+  INCLUDE("/home/taylor/src/ros/catkin_ws/build/mh5f_arm_only/cmake_install.cmake")
+  INCLUDE("/home/taylor/src/ros/catkin_ws/build/mort/cmake_install.cmake")
   INCLUDE("/home/taylor/src/ros/catkin_ws/build/pick/cmake_install.cmake")
+  INCLUDE("/home/taylor/src/ros/catkin_ws/build/publish_image/cmake_install.cmake")
+  INCLUDE("/home/taylor/src/ros/catkin_ws/build/spheres/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

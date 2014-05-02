@@ -1,0 +1,188 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Scene 3D1
+        - /Pallet - Scene1/Visibility1
+        - /Picked Point Marker1
+        - /Target Part1/Visibility1
+        - /Instructions1
+      Splitter Ratio: 0.5
+    Tree Height: 359
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: Scene 3D
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: Scene 3D
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.001
+      Style: Points
+      Topic: /study/depth/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Camera
+      Enabled: true
+      Image Rendering: background and overlay
+      Image Topic: /study/rgb/image
+      Name: Pallet - Scene
+      Overlay Alpha: 0
+      Queue Size: 2
+      Transport Hint: raw
+      Value: true
+      Visibility:
+        Buttons: true
+        Instructions: true
+        Picked Point Marker: true
+        Scene 3D: true
+        Target Part: true
+        Value: true
+      Zoom Factor: 1
+    - Class: rviz/InteractiveMarkers
+      Enable Transparency: true
+      Enabled: true
+      Name: Buttons
+      Show Axes: false
+      Show Descriptions: true
+      Show Visual Aids: false
+      Update Topic: /study_buttons/update
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /picked_point_marker
+      Name: Picked Point Marker
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Camera
+      Enabled: true
+      Image Rendering: background and overlay
+      Image Topic: /study/rgb/part_image
+      Name: Target Part
+      Overlay Alpha: 0.5
+      Queue Size: 2
+      Transport Hint: raw
+      Value: true
+      Visibility:
+        Buttons: false
+        Instructions: false
+        Pallet - Scene: false
+        Picked Point Marker: false
+        Scene 3D: false
+        Value: true
+      Zoom Factor: 1
+    - Class: rviz/Camera
+      Enabled: true
+      Image Rendering: background and overlay
+      Image Topic: /study/rgb/instructions
+      Name: Instructions
+      Overlay Alpha: 0.5
+      Queue Size: 2
+      Transport Hint: raw
+      Value: true
+      Visibility:
+        Buttons: false
+        Pallet - Scene: false
+        Picked Point Marker: false
+        Scene 3D: false
+        Target Part: false
+        Value: true
+      Zoom Factor: 1
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: camera_rgb_optical_frame
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 1.2448
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.0172551
+        Y: -0.0290002
+        Z: 0.998177
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: -1.5198
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 4.71858
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1137
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Instructions:
+    collapsed: false
+  Pallet - Scene:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000400000000000004c80000042bfc0200000009fb0000001c00500061006c006c006500740020002d0020005300630065006e006501000000280000042b0000001600fffffffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730200000829000000430000051b0000040cfb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c0000026100000001000002400000042bfc0200000005fb00000016005400610072006700650074002000500061007200740100000028000002510000001600fffffffb000000180049006e0073007400720075006300740069006f006e0073010000027f000001d40000001600fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000044000002ab000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b20000000000000000000000020000073f000001f8fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073f0000003bfc0100000002fb0000000800540069006d006500000000000000073f000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000000200000042b00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Target Part:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1844
+  X: 59
+  Y: 27

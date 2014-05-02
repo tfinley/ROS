@@ -1,0 +1,44 @@
+#include <ros/ros.h>
+#include <ros/package.h>
+#include <string>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <sstream> 
+
+using namespace std;
+
+int main(int argc, char** argv)
+{
+  ros::init(argc, argv, "publish_random_image");
+  ros::NodeHandle nh;
+	srand(time(NULL)); // help to really randomize integers
+
+	int Number = rand() % 5 + 1;
+	string packPath = ros::package::getPath("publish_image");
+	string folderPath = "/src/random_images/image_";
+	string imageNumber = static_cast<ostringstream*>( &(ostringstream() << Number) )->str();
+	string extension = ".jpg";
+	string filePath = packPath + folderPath + imageNumber + extension;
+	cout << folderPath << imageNumber << endl;
+
+	cv_bridge::CvImage cv_image;
+	cv_image.image = cv::imread(filePath,CV_LOAD_IMAGE_COLOR);
+	cv_image.encoding = "bgr8";
+	sensor_msgs::Image ros_image;
+	cv_image.toImageMsg(ros_image);
+
+  ros::Publisher pub = nh.advertise<sensor_msgs::Image>("/static_image", 1);
+  ros::Rate loop_rate(5);
+
+  while (nh.ok()) 
+  {
+    pub.publish(ros_image);
+    loop_rate.sleep();
+  }
+}
+
+
+
+

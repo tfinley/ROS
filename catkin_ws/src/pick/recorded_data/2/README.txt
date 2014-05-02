@@ -1,0 +1,2 @@
+scene_number part_number picked_point_x picked_point_y picked_point_z picked_point_duration confirmation_duration reset_instances
+picked_point_duration: seconds from a new scene to the time the last point was pickedconfirmation_duration: seconds from the last point that was picked to when the confirmation button was clickedreset_instances: the number of times the user cliced the reset button for this scene

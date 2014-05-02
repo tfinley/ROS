@@ -1,0 +1,8 @@
+prefix=/home/taylor/src/ros/catkin_ws/install
+
+Name: publish_image
+Description: Description of publish_image
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/taylor/src/ros/catkin_ws/install/lib 
+Requires: 

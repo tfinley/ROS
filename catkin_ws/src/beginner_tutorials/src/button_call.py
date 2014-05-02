@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+import roslib; roslib.load_manifest('beginner_tutorials')
+
+import sys
+
+import rospy
+from beginner_tutorials.srv import *
+
+def press_button(text):
+	rospy.wait_for_service('record_inputs')
+	try:
+		record_imputs = rospy.ServiceProxy('record_inputs', Button)
+		resp1 = record_imputs(text)
+		print "recieved back: %s"%(resp1.response)
+	except rospy.ServiceException, e:
+		print "Service call failed: %s"%e
+
+if __name__ == "__main__":
+	press_button(sys.argv[1])

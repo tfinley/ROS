@@ -17,24 +17,6 @@
 //Build shared libraries (DLLs).
 BUILD_SHARED_LIBS:BOOL=ON
 
-//The directory containing a CMake configuration file for Boost.
-Boost_DIR:PATH=Boost_DIR-NOTFOUND
-
-//Path to a file.
-Boost_INCLUDE_DIR:PATH=/usr/include
-
-//Boost library directory
-Boost_LIBRARY_DIRS:FILEPATH=/usr/lib
-
-//The Boost SYSTEM library
-Boost_SYSTEM_LIBRARY:FILEPATH=/usr/lib/libboost_system-mt.so
-
-//Boost system library (debug)
-Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/libboost_system-mt.so
-
-//Boost system library (release)
-Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/libboost_system-mt.so
-
 //List of ';' separated packages to exclude
 CATKIN_BLACKLIST_PACKAGES:STRING=
 
@@ -187,17 +169,23 @@ CMAKE_USE_RELATIVE_PATHS:BOOL=OFF
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//The directory containing a CMake configuration file for Ceres.
+Ceres_DIR:PATH=Ceres_DIR-NOTFOUND
+
 //Path to a program.
 DOXYGEN_EXECUTABLE:FILEPATH=/usr/bin/doxygen
 
 //Doxygen found
 DOXYGEN_FOUND:BOOL=TRUE
 
+//Path to a file.
+EIGEN_INCLUDE_DIR:PATH=/usr/include/eigen3
+
 //Path to a program.
 EMPY_EXECUTABLE:FILEPATH=/usr/bin/empy
 
-//Path to a program.
-GENACTION_BIN:FILEPATH=/opt/ros/hydro/lib/actionlib_msgs/genaction.py
+//The directory containing a CMake configuration file for Eigen.
+Eigen_DIR:PATH=/opt/ros/hydro/share/eigen/cmake
 
 //Path to a file.
 GTEST_INCLUDE_DIR:PATH=/usr/include
@@ -223,11 +211,31 @@ LSB_RELEASE_EXECUTABLE:FILEPATH=/usr/bin/lsb_release
 //Path to a program.
 NOSETESTS:FILEPATH=/usr/bin/nosetests
 
+//Path where debug 3rdpaty OpenCV dependencies are located
+OpenCV_3RDPARTY_LIB_DIR_DBG:PATH=/opt/ros/hydro/share/OpenCV/3rdparty/lib
+
+//Path where release 3rdpaty OpenCV dependencies are located
+OpenCV_3RDPARTY_LIB_DIR_OPT:PATH=/opt/ros/hydro/share/OpenCV/3rdparty/lib
+
+OpenCV_CONFIG_PATH:FILEPATH=/opt/ros/hydro/share/OpenCV
+
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/opt/ros/hydro/share/OpenCV
+
+//Path where debug OpenCV libraries are located
+OpenCV_LIB_DIR_DBG:PATH=/opt/ros/hydro/lib
+
+//Path where release OpenCV libraries are located
+OpenCV_LIB_DIR_OPT:PATH=/opt/ros/hydro/lib
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
 
-//Python version
-PYTHON_VERSION_XDOTY:STRING=2.7
+//Specify specific Python version to use ('major.minor' or 'major')
+PYTHON_VERSION:STRING=
 
 //Value Computed by CMake
 Project_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build
@@ -280,6 +288,9 @@ class_loader_DIR:PATH=/opt/ros/hydro/share/class_loader/cmake
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/hydro/share/cpp_common/cmake
 
+//The directory containing a CMake configuration file for cv_bridge.
+cv_bridge_DIR:PATH=/opt/ros/hydro/share/cv_bridge/cmake
+
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/hydro/share/dynamic_reconfigure/cmake
 
@@ -323,8 +334,38 @@ gtest_force_shared_crt:BOOL=OFF
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 
+//The directory containing a CMake configuration file for image_transport.
+image_transport_DIR:PATH=/opt/ros/hydro/share/image_transport/cmake
+
+//Value Computed by CMake
+industrial_extrinsic_cal_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/industrial_calibration/industrial_extrinsic_cal
+
+//Dependencies for target
+industrial_extrinsic_cal_LIB_DEPENDS:STATIC=
+
+//Value Computed by CMake
+industrial_extrinsic_cal_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/industrial_calibration/industrial_extrinsic_cal
+
+//Dependencies for the target
+industrial_extrinsic_cal_ceres_LIB_DEPENDS:STATIC=general;yaml-cpp;general;/opt/ros/hydro/lib/libcv_bridge.so;debug;/opt/ros/hydro/lib/libopencv_calib3d.so;debug;/opt/ros/hydro/lib/libopencv_contrib.so;debug;/opt/ros/hydro/lib/libopencv_core.so;debug;/opt/ros/hydro/lib/libopencv_features2d.so;debug;/opt/ros/hydro/lib/libopencv_flann.so;debug;/opt/ros/hydro/lib/libopencv_gpu.so;debug;/opt/ros/hydro/lib/libopencv_highgui.so;debug;/opt/ros/hydro/lib/libopencv_imgproc.so;debug;/opt/ros/hydro/lib/libopencv_legacy.so;debug;/opt/ros/hydro/lib/libopencv_ml.so;debug;/opt/ros/hydro/lib/libopencv_nonfree.so;debug;/opt/ros/hydro/lib/libopencv_objdetect.so;debug;/opt/ros/hydro/lib/libopencv_photo.so;debug;/opt/ros/hydro/lib/libopencv_stitching.so;debug;/opt/ros/hydro/lib/libopencv_superres.so;debug;/opt/ros/hydro/lib/libopencv_video.so;debug;/opt/ros/hydro/lib/libopencv_videostab.so;optimized;/opt/ros/hydro/lib/libopencv_calib3d.so;optimized;/opt/ros/hydro/lib/libopencv_contrib.so;optimized;/opt/ros/hydro/lib/libopencv_core.so;optimized;/opt/ros/hydro/lib/libopencv_features2d.so;optimized;/opt/ros/hydro/lib/libopencv_flann.so;optimized;/opt/ros/hydro/lib/libopencv_gpu.so;optimized;/opt/ros/hydro/lib/libopencv_highgui.so;optimized;/opt/ros/hydro/lib/libopencv_imgproc.so;optimized;/opt/ros/hydro/lib/libopencv_legacy.so;optimized;/opt/ros/hydro/lib/libopencv_ml.so;optimized;/opt/ros/hydro/lib/libopencv_nonfree.so;optimized;/opt/ros/hydro/lib/libopencv_objdetect.so;optimized;/opt/ros/hydro/lib/libopencv_photo.so;optimized;/opt/ros/hydro/lib/libopencv_stitching.so;optimized;/opt/ros/hydro/lib/libopencv_superres.so;optimized;/opt/ros/hydro/lib/libopencv_video.so;optimized;/opt/ros/hydro/lib/libopencv_videostab.so;general;/opt/ros/hydro/lib/libtf.so;general;/opt/ros/hydro/lib/libtf2_ros.so;general;/opt/ros/hydro/lib/libactionlib.so;general;/opt/ros/hydro/lib/libmessage_filters.so;general;/opt/ros/hydro/lib/libroscpp.so;general;/usr/lib/libboost_signals-mt.so;general;/usr/lib/libboost_filesystem-mt.so;general;/opt/ros/hydro/lib/libxmlrpcpp.so;general;/opt/ros/hydro/lib/libtf2.so;general;/opt/ros/hydro/lib/librosconsole.so;general;/opt/ros/hydro/lib/librosconsole_log4cxx.so;general;/opt/ros/hydro/lib/librosconsole_backend_interface.so;general;/usr/lib/liblog4cxx.so;general;/usr/lib/libboost_regex-mt.so;general;/opt/ros/hydro/lib/libroscpp_serialization.so;general;/opt/ros/hydro/lib/librostime.so;general;/usr/lib/libboost_date_time-mt.so;general;/usr/lib/libboost_system-mt.so;general;/usr/lib/libboost_thread-mt.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/opt/ros/hydro/lib/libcpp_common.so;general;/opt/ros/hydro/lib/libconsole_bridge.so;general;/opt/ros/hydro/lib/libroslib.so;
+
+//The directory containing a CMake configuration file for interactive_markers.
+interactive_markers_DIR:PATH=/opt/ros/hydro/share/interactive_markers/cmake
+
+//Value Computed by CMake
+learning_image_transport_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/learning_image_transport
+
+//Value Computed by CMake
+learning_image_transport_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/learning_image_transport
+
 //Path to a library.
 lib:FILEPATH=/opt/ros/hydro/lib/libtf2.so
+
+//Value Computed by CMake
+me539_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/me539
+
+//Value Computed by CMake
+me539_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/me539
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/hydro/share/message_filters/cmake
@@ -336,13 +377,22 @@ message_generation_DIR:PATH=/opt/ros/hydro/share/message_generation/cmake
 message_runtime_DIR:PATH=/opt/ros/hydro/share/message_runtime/cmake
 
 //Value Computed by CMake
-my_pcl_tutorial_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/my_pcl_tutorial
+mh5f_arm_only_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/mh5f_arm_only
 
 //Value Computed by CMake
-my_pcl_tutorial_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/my_pcl_tutorial
+mh5f_arm_only_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/mh5f_arm_only
+
+//Value Computed by CMake
+mort_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/mort
+
+//Value Computed by CMake
+mort_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/mort
 
 //The directory containing a CMake configuration file for nodelet.
 nodelet_DIR:PATH=/opt/ros/hydro/share/nodelet/cmake
+
+//The directory containing a CMake configuration file for opencv2.
+opencv2_DIR:PATH=opencv2_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for pcl_conversions.
 pcl_conversions_DIR:PATH=/opt/ros/hydro/share/pcl_conversions/cmake
@@ -362,8 +412,17 @@ pick_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/pick
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/hydro/share/pluginlib/cmake
 
+//Value Computed by CMake
+publish_image_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/publish_image
+
+//Value Computed by CMake
+publish_image_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/publish_image
+
 //The directory containing a CMake configuration file for rosbag.
 rosbag_DIR:PATH=/opt/ros/hydro/share/rosbag/cmake
+
+//The directory containing a CMake configuration file for rosbag_storage.
+rosbag_storage_DIR:PATH=/opt/ros/hydro/share/rosbag_storage/cmake
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/hydro/share/rosconsole/cmake
@@ -386,6 +445,12 @@ rosgraph_msgs_DIR:PATH=/opt/ros/hydro/share/rosgraph_msgs/cmake
 //The directory containing a CMake configuration file for roslib.
 roslib_DIR:PATH=/opt/ros/hydro/share/roslib/cmake
 
+//The directory containing a CMake configuration file for roslint.
+roslint_DIR:PATH=/opt/ros/hydro/share/roslint/cmake
+
+//The directory containing a CMake configuration file for rospkg.
+rospkg_DIR:PATH=rospkg_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/hydro/share/rospy/cmake
 
@@ -398,8 +463,17 @@ sensor_msgs_DIR:PATH=/opt/ros/hydro/share/sensor_msgs/cmake
 //The directory containing a CMake configuration file for smclib.
 smclib_DIR:PATH=/opt/ros/hydro/share/smclib/cmake
 
+//Value Computed by CMake
+spheres_BINARY_DIR:STATIC=/home/taylor/src/ros/catkin_ws/build/spheres
+
+//Value Computed by CMake
+spheres_SOURCE_DIR:STATIC=/home/taylor/src/ros/catkin_ws/src/spheres
+
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/hydro/share/std_msgs/cmake
+
+//The directory containing a CMake configuration file for std_srvs.
+std_srvs_DIR:PATH=/opt/ros/hydro/share/std_srvs/cmake
 
 //The directory containing a CMake configuration file for tf2.
 tf2_DIR:PATH=/opt/ros/hydro/share/tf2/cmake
@@ -419,6 +493,9 @@ tf_DIR:PATH=/opt/ros/hydro/share/tf/cmake
 //The directory containing a CMake configuration file for topic_tools.
 topic_tools_DIR:PATH=/opt/ros/hydro/share/topic_tools/cmake
 
+//The directory containing a CMake configuration file for visualization_msgs.
+visualization_msgs_DIR:PATH=/opt/ros/hydro/share/visualization_msgs/cmake
+
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/hydro/share/xmlrpcpp/cmake
 
@@ -427,22 +504,6 @@ xmlrpcpp_DIR:PATH=/opt/ros/hydro/share/xmlrpcpp/cmake
 # INTERNAL cache entries
 ########################
 
-//ADVANCED property for variable: Boost_INCLUDE_DIR
-Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_LIBRARY_DIRS
-Boost_LIBRARY_DIRS-ADVANCED:INTERNAL=1
-//The library version string for boost libraries
-Boost_LIB_VERSION:INTERNAL=1_46_1
-//Whether the Boost SYSTEM library found
-Boost_SYSTEM_FOUND:INTERNAL=ON
-//ADVANCED property for variable: Boost_SYSTEM_LIBRARY
-Boost_SYSTEM_LIBRARY-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
-Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
-Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
-//The version number for boost libraries
-Boost_VERSION:INTERNAL=104601
 //catkin environment
 CATKIN_ENV:INTERNAL=/home/taylor/src/ros/catkin_ws/build/catkin_generated/env_cached.sh
 CATKIN_TEST_RESULTS_DIR:INTERNAL=/home/taylor/src/ros/catkin_ws/build/test_results
@@ -498,6 +559,8 @@ CMAKE_C_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_DETERMINE_CXX_ABI_COMPILED:INTERNAL=TRUE
 //Result of TRY_COMPILE
 CMAKE_DETERMINE_C_ABI_COMPILED:INTERNAL=TRUE
+//Path to cache edit program executable.
+CMAKE_EDIT_COMMAND:INTERNAL=/usr/bin/ccmake
 //Executable file format
 CMAKE_EXECUTABLE_FORMAT:INTERNAL=ELF
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS
@@ -542,7 +605,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=5
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=9
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -571,6 +634,10 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: EIGEN_INCLUDE_DIR
+EIGEN_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//Details about finding Eigen
+FIND_PACKAGE_MESSAGE_DETAILS_Eigen:INTERNAL=[/usr/include/eigen3][v()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python][v2.7.3()]
 //Details about finding Threads
@@ -590,10 +657,57 @@ GTEST_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 GTEST_MAIN_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GTEST_MAIN_LIBRARY_DEBUG
 GTEST_MAIN_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_3RDPARTY_LIB_DIR_DBG
+OpenCV_3RDPARTY_LIB_DIR_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_3RDPARTY_LIB_DIR_OPT
+OpenCV_3RDPARTY_LIB_DIR_OPT-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_CONFIG_PATH
+OpenCV_CONFIG_PATH-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_LIB_DIR_DBG
+OpenCV_LIB_DIR_DBG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenCV_LIB_DIR_OPT
+OpenCV_LIB_DIR_OPT-ADVANCED:INTERNAL=1
+PC_EIGEN_CFLAGS:INTERNAL=-I/usr/include/eigen3
+PC_EIGEN_CFLAGS_I:INTERNAL=
+PC_EIGEN_CFLAGS_OTHER:INTERNAL=
+PC_EIGEN_FOUND:INTERNAL=1
+PC_EIGEN_INCLUDEDIR:INTERNAL=
+PC_EIGEN_INCLUDE_DIRS:INTERNAL=/usr/include/eigen3
+PC_EIGEN_LDFLAGS:INTERNAL=
+PC_EIGEN_LDFLAGS_OTHER:INTERNAL=
+PC_EIGEN_LIBDIR:INTERNAL=
+PC_EIGEN_LIBRARIES:INTERNAL=
+PC_EIGEN_LIBRARY_DIRS:INTERNAL=
+PC_EIGEN_LIBS:INTERNAL=
+PC_EIGEN_LIBS_L:INTERNAL=
+PC_EIGEN_LIBS_OTHER:INTERNAL=
+PC_EIGEN_LIBS_PATHS:INTERNAL=
+PC_EIGEN_PREFIX:INTERNAL=
+PC_EIGEN_STATIC_CFLAGS:INTERNAL=-I/usr/include/eigen3
+PC_EIGEN_STATIC_CFLAGS_I:INTERNAL=
+PC_EIGEN_STATIC_CFLAGS_OTHER:INTERNAL=
+PC_EIGEN_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/eigen3
+PC_EIGEN_STATIC_LDFLAGS:INTERNAL=
+PC_EIGEN_STATIC_LDFLAGS_OTHER:INTERNAL=
+PC_EIGEN_STATIC_LIBDIR:INTERNAL=
+PC_EIGEN_STATIC_LIBRARIES:INTERNAL=
+PC_EIGEN_STATIC_LIBRARY_DIRS:INTERNAL=
+PC_EIGEN_STATIC_LIBS:INTERNAL=
+PC_EIGEN_STATIC_LIBS_L:INTERNAL=
+PC_EIGEN_STATIC_LIBS_OTHER:INTERNAL=
+PC_EIGEN_STATIC_LIBS_PATHS:INTERNAL=
+PC_EIGEN_VERSION:INTERNAL=3.0.5
+PC_EIGEN_eigen3_INCLUDEDIR:INTERNAL=
+PC_EIGEN_eigen3_LIBDIR:INTERNAL=
+PC_EIGEN_eigen3_PREFIX:INTERNAL=
+PC_EIGEN_eigen3_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //This needs to be in PYTHONPATH when 'setup.py install' is called.
 //  And it needs to match.  But setuptools won't tell us where
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
+__pkg_config_checked_PC_EIGEN:INTERNAL=1
 

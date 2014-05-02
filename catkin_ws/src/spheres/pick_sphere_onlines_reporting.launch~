@@ -1,0 +1,6 @@
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/taylor/.rviz/spheres_online.rviz"/>
+  <node name="picked_segmentation_sphere_offline" pkg="spheres" type="picked_segmentation_sphere_offline" output="screen"/>
+  <node name="sphere_reporting" pkg="spheres" type="sphere_reporting" output="screen"/>
+</launch>
+

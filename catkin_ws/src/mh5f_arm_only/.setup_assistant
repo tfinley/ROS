@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: mh5f_description
+    relative_path: urdf/mh5f.urdf.xacro
+  SRDF:
+    relative_path: config/mh5f.srdf
+  CONFIG:
+    generated_timestamp: 1394747520

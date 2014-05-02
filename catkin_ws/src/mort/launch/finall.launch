@@ -1,0 +1,18 @@
+<launch>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mort)/rviz/mort.rviz"/>
+	<node name="mort_goal_manager" pkg="mort" type="mort_goal_manager.py" />
+
+  <node name="scrnout" pkg="mort" type="output.py" output="screen" launch-prefix="xterm -e"/>
+
+  <node name="worker1node" pkg="mort" type="workbench1.py"/>
+
+  <node name="worker2node" pkg="mort" type="workbench2.py"/>
+
+  <node name="rawmat" pkg="mort" type="rawmat.py"/>
+
+  <node name="robotplan" pkg="mort" type="robotplan.py" output="screen" launch-prefix="xterm -e"/>
+
+  <node name="puppetmaster" pkg="mort" type="puppetmstr.py" output="screen" launch-prefix="xterm -e"/>
+
+</launch>

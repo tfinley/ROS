@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "industrial_extrinsic_cal")
+set(industrial_extrinsic_cal_MAINTAINER "clewis <clewis@swri.org>")
+set(industrial_extrinsic_cal_DEPRECATED "")
+set(industrial_extrinsic_cal_VERSION "0.0.0")
+set(industrial_extrinsic_cal_BUILD_DEPENDS "roscpp" "std_msgs" "rosconsole" "std_srvs" "roslib" "roslint")
+set(industrial_extrinsic_cal_RUN_DEPENDS "roscpp" "std_msgs" "rosconsole" "std_srvs" "roslib")
+set(industrial_extrinsic_cal_BUILDTOOL_DEPENDS "catkin")

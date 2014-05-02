@@ -1,0 +1,2 @@
+roslaunch pick user_study.launch hmi:='mouse' user:=2
+

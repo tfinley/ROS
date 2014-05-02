@@ -6,5 +6,9 @@
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
 SUBDIRS(beginner_tutorials)
-SUBDIRS(my_pcl_tutorial)
+SUBDIRS(me539)
+SUBDIRS(mh5f_arm_only)
+SUBDIRS(mort)
 SUBDIRS(pick)
+SUBDIRS(publish_image)
+SUBDIRS(spheres)

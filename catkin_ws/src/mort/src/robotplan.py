@@ -1,0 +1,279 @@
+#!/usr/bin/env python
+#ROBOT TOP LEVEL PLANNING
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('mort')
+import rospy
+import numpy
+import os
+
+from  geometry_msgs.msg import PoseWithCovarianceStamped
+from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Int16
+
+#Define global vars
+glbwork1in = [0,0,0]		#workbench1 queue
+glbwork2in = [0,0,0]		#workbench2 queue
+glbwork1out = [0,0]		#workbench1 output
+glbwork2out = [0,0]		#workbench2 output
+coff = 0			#Interrupt Request
+tarr = 1			#Current Target
+gps = [.5,5]			#Current Position
+robotpay = [0,0]		#Robot payload
+
+
+
+#UPDATE GLOBAL VARS
+def wk1incase(data):
+	global glbwork1in
+	glbwork1in = [round(elem,2) for elem in data.data] #Import & remove 
+
+def wk1outcase(data):
+	global glbwork1out
+	glbwork1out = [round(elem,2) for elem in data.data] #Import & remove 
+
+def wk2incase(data):
+	global glbwork2in
+	glbwork2in = [round(elem,2) for elem in data.data] #Import & remove 
+
+def wk2outcase(data):
+	global glbwork2out
+	glbwork2out = [round(elem,2) for elem in data.data] #Import & remove 
+
+def coffeee(data):
+	global coff
+	coff = coff+data.data
+
+	#ADD PRIORITY TO COMPARE TARGETS HERE
+	
+def gpss(data):
+	global gps
+	#gps = data.data
+	gps = [data.pose.pose.position.x,data.pose.pose.position.y]
+
+
+def rawmatsin(data):
+	#Add new materials
+	global robotpay
+	robotpay = [round(elem,2) for elem in data.data] #Import & remove 
+
+
+#####MAIN CODE
+def decision():
+	#Define local variables
+	waypointx = [0,-3.636,1.8161,1.6162,5.9445,-1.6062,6]	#MANUALLY KEY IN X WAYPOINTS - first point is null
+	waypointy = [0,-1.351,-1.1600,-4.8752,-8.3671,2.9547,0]		#MANUALLY KEY IN Y WAYPOINTS
+
+	targ_thresh = .5		#How close to get to waypoint
+
+	global glbwork1in, glbwork1out,glbwork2in,glbwork2out,coff,tarr,gps,robotpay
+	rospy.sleep(30) #let it boot up
+	for i in range(1,100):
+		targ2.publish(data=int(tarr))
+	stuck = 0
+
+	while not rospy.is_shutdown():
+		if coff>7 and not tarr==5: #coffee above threshold
+			tarrtemp = tarr
+			tarr=5			#Stop what you are doing and get coffee
+			for i in range(1,100):
+				targ2.publish(data=tarr)
+			print(tarr)
+			print('here343')
+		elif tarr>0: #Target is latched
+			if abs(gps[0]-waypointx[tarr])<targ_thresh and abs(gps[1]-waypointy[tarr])<targ_thresh: #target is within range
+				
+				tararch = tarr
+				
+				####UNLOAD
+							
+				if tarr==2 and (robotpay[0]==1 or robotpay[0]==1.01 or robotpay[1]==1):
+					#UNLOAD LARGE OBJECT IF YOU HAVE IT AND THERE IS ROOM - WORKSTATION 1
+					if robotpay[0]==1.01 and int(round(sum(glbwork1in)))<2:
+						wk1in.publish(data=[1.01,1.01])
+						robotpay = [0,0]
+					elif robotpay == [1,1] and int(round(sum(glbwork1in)))<2:
+						wk1in.publish(data=[1,1])
+						robotpay = [0,0]	
+					elif robotpay[1]==1 and int(round(sum(glbwork1in)))<3:
+						wk1in.publish(data=[1])
+						robotpay[1] = 0			
+					elif robotpay[0]==1 and int(round(sum(glbwork1in)))<3:
+						wk1in.publish(data=[1])
+						robotpay[0] = 0
+				elif tarr==3 and (robotpay[0] ==1 or robotpay[0] ==1.01 or robotpay[1] ==1):
+					#UNLOAD LARGE OBJECT IF YOU HAVE IT AND THERE IS ROOM - WORKSTATION 2
+					if robotpay[0]==1.01 and int(round(sum(glbwork2in)))<2:
+						wk2in.publish(data=[1.01,1.01])
+						robotpay = [0,0]
+					elif robotpay == [1,1] and int(round(sum(glbwork2in)))<2:
+						wk2in.publish(data=[1,1])
+						robotpay = [0,0]	
+					elif robotpay[1]==1 and int(round(sum(glbwork2in)))<3:
+						wk2in.publish(data=[1])
+						robotpay[1] = 0			
+					elif robotpay[0]==1 and int(round(sum(glbwork2in)))<3:
+						wk2in.publish(data=[1])
+						robotpay[0] = 0			
+				elif tarr==4: #station = 4
+					robotpay = [0,0]
+
+				print(robotpay)	
+
+				print('unload complete')
+				print('robot,in,out,tar')
+				print([robotpay,glbwork1in,glbwork1out,tarr])	
+
+
+				##LOAD
+				if tarr==1: #station 1
+					#call raw material queue and robot will be re-plenished
+					rawmats.publish(data=1)
+				elif tarr==2:
+					#load finished goods wkstation 1
+					if robotpay[0]==0 and glbwork1out[0]==1.11:
+						#Load a large object
+						robotpay=glbwork1out
+						wk1out.publish(data=2)
+					elif robotpay[0]==0 and glbwork1out[0]==1.1:
+						#Load two small objects
+						robotpay=glbwork1out
+						wk1out.publish(data=2)
+					elif robotpay[0]==0 and glbwork1out[0]==1.1:
+						robotpay[0]=glbwork1out[0]
+						wk1out.publish(data=1)
+					elif robotpay[1]==0 and glbwork1out[0]==1.1:
+						robotpay[1]=glbwork1out[0]
+						wk1out.publish(data=1)
+				elif tarr==3:
+					#load finished goods wkstation 1
+					if robotpay[0]==0 and glbwork2out[0]==1.11:
+						#Load a large object
+						robotpay=glbwork2out
+						wk2out.publish(data=2)
+						print('case1')
+					elif robotpay[0]==0 and glbwork2out[0]==1.1:
+						#Load two small objects
+						robotpay=glbwork2out
+						wk2out.publish(data=2)
+						print('case2')
+					elif robotpay[0]==0 and glbwork2out[0]==1.1:
+						robotpay[0]=glbwork2out[0]
+						wk2out.publish(data=1)
+						print('case3')
+					elif robotpay[1]==0 and glbwork2out[0]==1.1:
+						robotpay[1]=glbwork2out[0]
+						wk2out.publish(data=1)
+						print('case3')
+
+			
+				print('load complete')
+				print('robot,in,out,tar')
+				print([robotpay,glbwork2in,glbwork2out,tarr])				
+				#c = raw_input('hold')
+
+				#FIND NEW TARGET
+				rospy.sleep(.5)		
+				print([robotpay,glbwork2in,glbwork2out,tarr])		
+				if tarr==5: #reset coffee
+					coff = 0
+					coffgot.publish(data = 1)
+					tarr = tarrtemp
+
+				if tarr == 4:
+					#Look for locked up case
+					#print([glbwork1in,glbwork1out])				
+					if int(round(sum(glbwork1in))) >=2 and int(round(sum(glbwork1out)))==2:
+						#Workbench1 locked - go there to relieve
+						tarr=2
+						print('case1.1')
+					elif int(round(sum(glbwork2in))) ==2 and int(round(sum(glbwork2out)))==2:
+						#Workbench2 locked - go there to relieve
+						tarr=3
+						print('case1.2')
+					elif glbwork1out[0]==1.1 and glbwork1out[0]==0 and glbwork1in[0] ==1.11:
+						#Stuck = go save it
+						tarr=2
+					elif glbwork2out[0]==1.1 and glbwork2out[0]==0 and glbwork2in[0] ==1.11:
+						#Stuck = go save it
+						tarr=3
+					else:
+						tarr = 1 #Go to queue
+						print('case 1.3')
+				elif robotpay[1]==1.1 or robotpay[1]==1.11:
+					#Dump if completely full				
+					tarr=4
+				elif robotpay[1]==0 and glbwork1out[0] ==1.1:
+					tarr=2
+					print('case3')
+				elif robotpay[1]==0 and glbwork2out[0] ==1.1:
+					tarr=3
+					print('case4')
+				elif tarr==1 and int(round(sum(glbwork2in)))<=int(round(sum(glbwork1in))) and int(round(sum(glbwork2in)))<=2:
+					tarr=3
+					print('case5')
+				elif tarr==1 and int(round(sum(glbwork1in)))<int(round(sum(glbwork2in))) and int(round(sum(glbwork1in)))<=2:
+					tarr=2
+					print('case6')
+				elif int(round(sum(robotpay)))==0 and int(round(sum(glbwork1out)))==0 and int(round(sum(glbwork1out)))==0:
+					tarr=1
+					print('case7')
+				elif robotpay[0]==1.1:
+					print('case8')
+					if glbwork1out[0]==1.1:
+						tarr=2
+					elif glbwork2out[0]==1.1:
+						tarr=3
+					else:
+						tarr=4				
+				else:
+					stuck = stuck +1					
+					rospy.sleep(2)					
+
+				if stuck >=10:
+					#robot is stuck - dump payload
+					stuck = 0
+					tarr=4
+
+				
+
+				robott.publish(data=robotpay)
+				for i in range(1,100):
+					targ2.publish(data=tarr)
+				
+				
+
+				print('pay2')				
+				print(robotpay)	
+				print('target')			
+				print(tarr)
+				print('wkbnch1')
+				print([glbwork1in,glbwork1out])
+
+
+
+
+
+if __name__ == '__main__':
+	rospy.init_node('robotplan')
+	#os.system('clear')
+
+	targ2 = rospy.Publisher('target2',Int16)
+	rawmats = rospy.Publisher('rawmatreq',Int16)
+	wk1in = rospy.Publisher('work1inpkt',Float32MultiArray)
+	wk1out = rospy.Publisher('work1outpkt',Int16)
+	wk2in = rospy.Publisher('work2inpkt',Float32MultiArray)
+	wk2out = rospy.Publisher('work2outpkt',Int16)
+	robott = rospy.Publisher('robotpayload',Float32MultiArray)
+	coffgot = rospy.Publisher('coffeegot',Int16)
+
+	rospy.Subscriber('work1in',Float32MultiArray,wk1incase)
+	rospy.Subscriber('work1out',Float32MultiArray,wk1outcase)
+	rospy.Subscriber('work2in',Float32MultiArray,wk2incase)
+	rospy.Subscriber('work2out',Float32MultiArray,wk2outcase)
+	rospy.Subscriber('coffee',Int16,coffeee)
+	rospy.Subscriber('rawmatout',Float32MultiArray,rawmatsin)
+	rospy.Subscriber("amcl_pose", PoseWithCovarianceStamped, gpss)
+	
+	decision()
+

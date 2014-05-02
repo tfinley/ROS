@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+
+# Author: Taylor Finley
+# Date: 2014.02.05
+# Description: This node is designed to conrtrol a robot with a laserscan
+#				output which this will subsribe to and determine when the 
+#				robot should stop before it hits a wall. The control will
+# 				be by publishing a twist msg that the robot is subscribed
+# 				add param depth_registration:=false to end of launch command
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('me539')
+import rospy 
+import numpy as np
+import math
+
+# The velocity command message
+from geometry_msgs.msg import Point
+
+# LaserScan message lib
+from sensor_msgs.msg import LaserScan
+
+# Define global variable
+xMin = -0.5
+xMax = 0.5
+
+
+def scan_callback(data):
+	pts=np.array([100,100]) # create empty numpy array for points
+	# Calculate min distance from laserscan (data)
+	dists = data.ranges # get distances from laserscan
+	# filter out nan values
+	distArray = np.array(dists) #create array from distances
+	whereNans = np.isnan(distArray) # find where nan values are
+	distArray[whereNans] = 100 # replace all nan values with 100
+	# Get min angle
+	minSensorAngle = data.angle_min
+	# Get anlge increment between range values
+	angleInc = data.angle_increment
+	# Calcultee min distance between desired angles
+	for i in range(len(dists)):
+		#calculate angles
+		theta = minSensorAngle + angleInc*i #remember that i starts with 0
+		xtemp = distArray[i] * math.sin(theta) *-1
+		ytemp = distArray[i]*math.cos(theta)
+		temp = np.array([xtemp, ytemp])
+		pts = np.vstack((pts,temp))
+
+	subPts = pts[np.all([pts[:,0] > xMin, pts[:,0] < xMax], axis=0)]
+	minIndex = np.argmin(subPts[:,1]) #get index of min y
+
+	pt = Point()	
+	pt.x = subPts[minIndex,0]
+	pt.y = subPts[minIndex,1]
+
+	print (pt)
+
+	# Publish point
+	pub.publish(pt)
+
+if __name__ == '__main__':
+	rospy.init_node('pointer')
+
+	# A subscriber to recieve data from the robot's laserscan
+	sub = rospy.Subscriber('scan', LaserScan, scan_callback)
+
+	# A publisher for minimum distance read
+	pub = rospy.Publisher('followPoint', Point)
+
+	# Do ROS stuff
+	rospy.spin()
+
+   

@@ -1,0 +1,419 @@
+/*
+
+Originally created by Taylor Finley, 2013.12.19
+License: BSD
+Description: 	The purpose of this node is to take in a segmented point cloud around two spheres
+				and measure the distance between the two spheres. The measurement will be done in
+				two different ways. The first way will be with ICP with an intial guess coming in
+				in the formed of picked points from RVIZ. It will measure multiple point clouds and
+				average them to give a final measurement number (to reduce error from noise). The 
+				second measurement will be by using a sphere segmentation meathod to calculate the 
+				center of the two spheres. This meathod will also use an average approach. The report 
+				will print to a text file. The program will close after each measurement set.
+
+*/
+
+#include <ros/ros.h>
+#include <boost/foreach.hpp> 
+#include <pcl/io/pcd_io.h>  
+#include <pcl/point_types.h>
+#include <pcl_ros/point_cloud.h> 
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <pcl/filters/passthrough.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/registration/icp.h>
+#include <pcl/ModelCoefficients.h>
+#include <pcl/features/normal_3d.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <sensor_msgs/PointCloud2.h>
+#include <geometry_msgs/PointStamped.h>
+#include <std_msgs/Header.h>
+#include <std_msgs/Bool.h>
+#include <tf/transform_broadcaster.h>
+#include <tf/transform_datatypes.h>
+#include <tf_conversions/tf_eigen.h>
+#include <tf/tf.h>
+#include <tf/tfMessage.h>
+#include <visualization_msgs/Marker.h>
+#include <time.h>
+
+using namespace std;
+
+//typedefs
+typedef pcl::PointXYZRGB rgbpoint;
+typedef pcl::PointCloud<pcl::PointXYZRGB> cloudrgb;
+typedef cloudrgb::Ptr cloudrgbptr;
+typedef pcl::PointCloud<pcl::PointXYZ> cloudxyz;
+typedef cloudxyz::Ptr cloudxyzptr;
+typedef pcl::PointXYZRGB PointT;
+
+//global variables
+ros::Publisher pub1;
+ros::Publisher pub2;
+ros::Publisher vis_pub;
+ros::Publisher marker_pub;
+
+float picked1_x = 0.0;
+float picked1_y = 0.0;
+float picked1_z = 0.0;
+bool picked1 (false);
+float picked2_x = 0.0;
+float picked2_y = 0.0;
+float picked2_z = 0.0;
+bool picked2 (false);
+bool aligned1 (false);
+double x1 = 0.0;
+double y_1 = 0.0;
+double z1 = 0.0;
+double x2 = 0.0;
+double y_2 = 0.0;
+double z2 = 0.0;
+float segX1, segX2, segY1, segY2, segZ1, segZ2, segR1, segR2;
+cloudrgbptr cloud_source (new cloudrgb());	
+cloudrgbptr cloud_translated1 (new cloudrgb());	//Translated cloud using point
+cloudrgbptr cloud_translated2 (new cloudrgb());	//Translated cloud using point
+int measured = 0;
+int const sample_size = 10;
+float icpDistance = 0;
+float icpDistanceArray[sample_size]  = {0}; 
+float sacDistance = 0;
+float sacDistanceArray[sample_size]  = {0}; 
+
+void 
+point1_cb (const boost::shared_ptr<const geometry_msgs::Point>& point1_ptr)
+{
+  picked1_x = point1_ptr->x;
+  picked1_y = point1_ptr->y;
+  picked1_z = point1_ptr->z;  
+  picked1 = true;
+}
+
+void 
+point2_cb (const boost::shared_ptr<const geometry_msgs::Point>& point2_ptr)
+{
+  picked2_x = point2_ptr->x;
+  picked2_y = point2_ptr->y;
+  picked2_z = point2_ptr->z;  
+  picked2 = true;
+}
+
+void 
+align1_cb (const sensor_msgs::PointCloud2ConstPtr& cloud1)
+{
+  if (picked1)
+  {  
+	cloudrgbptr cloud_segment (new cloudrgb());	//Segmented point cloud from msg
+  	pcl::fromROSMsg(*cloud1, *cloud_segment); 	//Convert msg to point cloud
+  	
+	cloudrgbptr cloud_aligned (new cloudrgb());  	//Aligned output from ICP
+  	sensor_msgs::PointCloud2 cloud_aligned_msg;  	//create msg to publish
+
+	// Translate to picked point       	
+	Eigen::Matrix4f Tm;
+	Tm << 	1, 0, 0, picked1_x,
+			0, 1, 0, picked1_y,
+			0, 0, 1, picked1_z,
+			0, 0, 0, 1;
+
+	pcl::transformPointCloud(*cloud_source, *cloud_translated1, Tm);
+
+	// ICP
+
+	// Setup ICP
+  	pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;
+  	icp.setEuclideanFitnessEpsilon (1e-10);
+	icp.setTransformationEpsilon (1e-6);
+  	icp.setMaxCorrespondenceDistance (.1);
+  	icp.setMaximumIterations(50);
+  	icp.setInputSource(cloud_translated1);
+  	icp.setInputTarget(cloud_segment);
+
+  	//copy the source cloud
+  	cloud_aligned = cloud_translated1;
+	Eigen::Matrix4f prev;
+ 
+  	//Forced iteractions with ICP loop
+  	for (int i = 0; i < 3; ++i)
+  	{
+    	//PCL_INFO ("Iteration Nr. %d.\n", i);
+    	cloud_translated1 = cloud_aligned; //when you set to pointers equal does it actaully set the point clouds equal?
+    	icp.setInputSource (cloud_translated1);
+    	icp.align (*cloud_aligned);
+	  	Tm = icp.getFinalTransformation () * Tm;
+    	//std::cout << "has converged:" << icp.hasConverged() << " score: " << icp.getFitnessScore() << std::endl;
+	  	//added change to each iteration
+	  	if (fabs ((icp.getLastIncrementalTransformation () - prev).sum ()) < icp.getTransformationEpsilon ())
+      		icp.setMaxCorrespondenceDistance (icp.getMaxCorrespondenceDistance () - 0.001);
+    	prev = icp.getLastIncrementalTransformation ();
+  	}
+  	//std::cout << "Final 1 Tm:" << std::endl;
+  	//std::cout << Tm << std::endl;	
+
+	x1 = Tm(0,3);
+	y_1 = Tm(1,3);
+	z1 = Tm(2,3);
+
+  	//Convert the pcl cloud back to rosmsg
+  	pcl::toROSMsg(*cloud_aligned, cloud_aligned_msg);
+  
+  	//Set the header of the cloud
+  	cloud_aligned_msg.header.frame_id = cloud1->header.frame_id;
+  	// Publish the data
+  	//You may have to set the header frame id of the cloud_filtered also
+  	pub1.publish (cloud_aligned_msg);
+
+	// publish sphere marker
+	visualization_msgs::Marker marker;
+    marker.header.frame_id = "/camera_rgb_optical_frame";
+    marker.header.stamp =  ros::Time::now();
+    marker.ns = "sphere1";
+    marker.type = visualization_msgs::Marker::SPHERE;
+    marker.action = visualization_msgs::Marker::ADD;
+    marker.id = 0;
+    // Arrow Scale
+    marker.scale.x = 0.0508;
+    marker.scale.y = 0.0508;
+    marker.scale.z = 0.0508;
+    // arrow is red
+    marker.color.r = 1.0;
+    marker.color.a = 0.5;
+	//set center point
+    marker.pose.position.x = Tm(0,3);
+    marker.pose.position.y = Tm(1,3);
+    marker.pose.position.z = Tm(2,3);
+    std::cout << "ICP CENTER:" << std::endl;
+	std::cout << "x1: " << Tm(0,3) << " y1: " << Tm(1,3) << " z1: " << Tm(2,3) << std::endl;
+    marker_pub.publish(marker);
+
+	std::cout << "Sphere 1 Aligned" << std::endl;
+	aligned1 = true;
+
+	// ---------------- Start Sphere Detection with PCL -------------------
+
+  	// Create the segmentation object for sphere segmentation and set all the parameters
+  	pcl::SACSegmentation<PointT> seg; 
+  	seg.setOptimizeCoefficients (false);
+  	seg.setModelType (pcl::SACMODEL_SPHERE);
+  	seg.setMethodType (pcl::SAC_RANSAC);
+  	seg.setMaxIterations (100000);
+  	seg.setDistanceThreshold (0.001);
+  	seg.setRadiusLimits (0.0, 0.026);
+  	seg.setInputCloud (cloud_segment);
+
+
+  	// Obtain the sphere inliers and coefficients
+	pcl::ModelCoefficients::Ptr coefficients_sphere (new pcl::ModelCoefficients);
+    pcl::PointIndices::Ptr inliers_sphere (new pcl::PointIndices);
+  	seg.segment (*inliers_sphere, *coefficients_sphere);
+
+	//set coefficients to variables
+	segX1 = coefficients_sphere->values[0];
+	segY1 = coefficients_sphere->values[1];
+	segZ1 = coefficients_sphere->values[2];
+	segR1 = coefficients_sphere->values[3];
+	std::cout << "SEG CENTER:" << std::endl;
+	std::cout << "x1: " << segX1 << " y1: " << segY1 << " z1: " << segZ1 << " r1: " << segR1 << std::endl;
+
+  	//END SPHERE SEG
+
+  }
+}
+
+
+void 
+align2_cb (const sensor_msgs::PointCloud2ConstPtr& cloud2)
+{
+  if (picked2 && aligned1)
+  {  
+	cloudrgbptr cloud_segment (new cloudrgb());	//Segmented point cloud from msg
+  	pcl::fromROSMsg(*cloud2, *cloud_segment); 	//Convert msg to point cloud
+  	
+	cloudrgbptr cloud_aligned (new cloudrgb());  	//Aligned output from ICP
+  	sensor_msgs::PointCloud2 cloud_aligned_msg;  	//create msg to publish
+
+	// Translate to picked point       	
+	Eigen::Matrix4f Tm;
+	Tm << 	1, 0, 0, picked2_x,
+			0, 1, 0, picked2_y,
+			0, 0, 1, picked2_z,
+			0, 0, 0, 1;
+
+	pcl::transformPointCloud(*cloud_source, *cloud_translated2, Tm);
+
+	// ICP
+
+	// Setup ICP
+  	pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;
+  	icp.setEuclideanFitnessEpsilon (1e-10);
+	icp.setTransformationEpsilon (1e-6);
+  	icp.setMaxCorrespondenceDistance (.1);
+  	icp.setMaximumIterations(50);
+  	icp.setInputSource(cloud_translated2);
+  	icp.setInputTarget(cloud_segment);
+
+  	//copy the source cloud
+  	cloud_aligned = cloud_translated2;
+	Eigen::Matrix4f prev;
+ 
+  	//Forced iteractions with ICP loop
+  	for (int i = 0; i < 3; ++i)
+  	{
+    	cloud_translated2 = cloud_aligned; //when you set to pointers equal does it actaully set the point clouds equal?
+    	icp.setInputSource (cloud_translated2);
+    	icp.align (*cloud_aligned);
+	  	Tm = icp.getFinalTransformation () * Tm;
+    	//std::cout << "has converged:" << icp.hasConverged() << " score: " << icp.getFitnessScore() << std::endl;
+	  	//added change to each iteration
+	  	if (fabs ((icp.getLastIncrementalTransformation () - prev).sum ()) < icp.getTransformationEpsilon ())
+      		icp.setMaxCorrespondenceDistance (icp.getMaxCorrespondenceDistance () - 0.001);
+    	prev = icp.getLastIncrementalTransformation ();
+  	}
+  	//std::cout << "Final 2 Tm:" << std::endl;
+  	//std::cout << Tm << std::endl;	
+
+	x2 = Tm(0,3);
+	y_2 = Tm(1,3);
+	z2 = Tm(2,3);
+
+  	//Convert the pcl cloud back to rosmsg
+  	pcl::toROSMsg(*cloud_aligned, cloud_aligned_msg);
+  
+  	//Set the header of the cloud
+  	cloud_aligned_msg.header.frame_id = cloud2->header.frame_id;
+  	// Publish the data
+  	//You may have to set the header frame id of the cloud_filtered also
+  	pub2.publish (cloud_aligned_msg);
+
+	// publish sphere marker
+	visualization_msgs::Marker marker;
+    marker.header.frame_id = "/camera_rgb_optical_frame";
+    marker.header.stamp =  ros::Time::now();
+    marker.ns = "sphere2";
+    marker.type = visualization_msgs::Marker::SPHERE;
+    marker.action = visualization_msgs::Marker::ADD;
+    marker.id = 1;
+    // Arrow Scale
+    marker.scale.x = 0.0508;
+    marker.scale.y = 0.0508;
+    marker.scale.z = 0.0508;
+    // arrow is red
+    marker.color.r = 1.0;
+    marker.color.a = 0.5;
+    marker.pose.position.x = Tm(0,3);
+    marker.pose.position.y = Tm(1,3);
+    marker.pose.position.z = Tm(2,3);
+    marker_pub.publish(marker);
+
+	std::cout << "Sphere 2 Aligned" << std::endl;
+
+	icpDistance = sqrt(pow((x1-x2),2) + pow((y_1-y_2),2) + pow((z1-z2),2));
+	std::cout << "ICP Distance: " << icpDistance << std::endl;
+    icpDistanceArray[measured] = icpDistance;
+	
+	// ---------------- Start Sphere Detection with PCL -------------------
+
+  	// Create the segmentation object for sphere segmentation and set all the parameters
+  	pcl::SACSegmentation<PointT> seg; 
+  	seg.setOptimizeCoefficients (false);
+  	seg.setModelType (pcl::SACMODEL_SPHERE);
+  	seg.setMethodType (pcl::SAC_RANSAC);
+  	seg.setMaxIterations (100000);
+  	seg.setDistanceThreshold (0.001);
+  	seg.setRadiusLimits (0.0, 0.026);
+  	seg.setInputCloud (cloud_segment);
+
+  	// Obtain the sphere inliers and coefficients
+	pcl::ModelCoefficients::Ptr coefficients_sphere (new pcl::ModelCoefficients);
+    pcl::PointIndices::Ptr inliers_sphere (new pcl::PointIndices);
+  	seg.segment (*inliers_sphere, *coefficients_sphere);
+
+
+	//set coefficients to variables
+	segX2 = coefficients_sphere->values[0];
+	segY2 = coefficients_sphere->values[1];
+	segZ2 = coefficients_sphere->values[2];
+	segR2 = coefficients_sphere->values[3];
+	std::cout << "SEG CENTER:" << std::endl;
+	std::cout << "x2: " << segX2 << " y2: " << segY1 << " z2: " << segZ1 << " r2: " << segR1 << std::endl;
+
+  	//END SPHERE SEG
+	
+	//calulate distance from seg
+  	sacDistance = sqrt(pow((segX1-segX2),2) + pow((segY1-segY2),2) + pow((segZ1-segZ2),2));
+  	std::cout << "SAC Distance: " << sacDistance << std::endl;
+	sacDistanceArray[measured] = sacDistance;
+
+	//Reporting...	
+	measured = ++measured;
+    if (measured == sample_size){
+		
+		//calculate average distance for ICP
+		float icpAverage = 0;
+		for( int k = 0; k < sample_size; k++) icpAverage += icpDistanceArray[k];
+		icpAverage/=sample_size;
+		std::cout << "icpAverage: " << icpAverage << std::endl;
+
+		// Calculate average distance for SAC
+		float sacAverage = 0;
+		for( int m = 0; m < sample_size; m++) sacAverage += sacDistanceArray[m];
+		sacAverage/=sample_size;
+		std::cout << "sacAverage: " << sacAverage << std::endl;
+			
+		//write data to text file
+		std::ofstream outFile; // File Creation
+		outFile.open("/home/taylor/src/distances.txt", ios::out | ios::app);
+    	for(int j=0;j<sample_size;j++) outFile << icpDistanceArray[j] << " " << sacDistanceArray[j] << '\n'; //Outputs array to txtFile
+		outFile << "icpAverage " << "sacAverage" << '\n';
+		outFile << icpAverage  << " " << sacAverage << '\n';
+		outFile << " " << '\n';
+		outFile.close();
+		std::cout << "Report Complete" << std::endl;
+
+		//shutdown
+		ros::Duration(0.5).sleep();
+		ros::shutdown();
+	}
+ 
+	//reset for next interation
+	aligned1 = false;
+  }
+}
+
+int
+main (int argc, char** argv)
+{
+  // Initialize ROS
+  ros::init (argc, argv, "sphere_reporting");
+  ros::NodeHandle nh;
+
+  // Load PDC file of source (lifting eye)
+  pcl::io::loadPCDFile<pcl::PointXYZRGB>("/home/taylor/src/data_pcd/spheres/sphere_m.pcd", *cloud_source);
+
+  // Create a ROS subscriber for the clicked point
+  ros::Subscriber sub1 = nh.subscribe ("/sphere1/picked_point", 1, point1_cb);
+
+  // Create a ROS subscriber for the clicked point
+  ros::Subscriber sub2 = nh.subscribe ("/sphere2/picked_point", 1, point2_cb);
+
+  // Create a ROS subscriber for the input point cloud
+  ros::Subscriber sub3 = nh.subscribe ("/sphere1/seg_points", 1, align1_cb);
+
+  // Create a ROS subscriber for the input point cloud
+  ros::Subscriber sub4 = nh.subscribe ("/sphere2/seg_points", 1, align2_cb);
+
+  // Create a ROS publisher for the output point cloud
+  pub1 = nh.advertise<sensor_msgs::PointCloud2> ("/sphere1/aligned_cloud", 1);
+
+  // Create a ROS publisher for the output point cloud
+  pub2 = nh.advertise<sensor_msgs::PointCloud2> ("/sphere2/aligned_cloud", 1);
+
+  // Create publisher for the marker
+  marker_pub = nh.advertise<visualization_msgs::Marker>("visualization_marker", 10);
+
+  // Spin
+  ros::spin ();
+}

@@ -1,0 +1,8 @@
+prefix=/home/taylor/src/ros/catkin_ws/devel
+
+Name: industrial_extrinsic_cal
+Description: Description of industrial_extrinsic_cal
+Version: 0.0.0
+Cflags: -I/home/taylor/src/ros/catkin_ws/src/industrial_calibration/industrial_extrinsic_cal/include
+Libs: -L/home/taylor/src/ros/catkin_ws/devel/lib 
+Requires: roscpp std_msgs rosconsole std_srvs roslib

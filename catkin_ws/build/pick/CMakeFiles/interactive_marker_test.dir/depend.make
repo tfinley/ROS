@@ -26,6 +26,8 @@ pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/callback_queue_interface.h
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/common.h
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/console.h
+pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/console_backend.h
+pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/datatypes.h
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/duration.h
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/exception.h
 pick/CMakeFiles/interactive_marker_test.dir/src/interactive_marker_test.cpp.o: /opt/ros/hydro/include/ros/exceptions.h

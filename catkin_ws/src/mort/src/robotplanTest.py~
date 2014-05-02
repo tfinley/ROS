@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+#ROBOT TOP LEVEL PLANNING
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('mort')
+import rospy
+import numpy
+import os
+
+
+from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Int16
+
+#Define global vars
+glbwork1in = [0,0,0]		#workbench1 queue
+glbwork2in = [0,0,0]		#workbench2 queue
+glbwork1out = [0,0]		#workbench1 output
+glbwork2out = [0,0]		#workbench2 output
+coff = 0			#Interrupt Request
+tarr = 1			#Current Target
+gps = [.5,5]			#Current Position
+robotpay = [0,0]		#Robot payload
+
+
+#####MAIN CODE
+def decision():
+	
+	print('at beginning')	
+	msg = Int16()
+	msg.data = 2
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	targ2.publish(msg)
+	print(msg)
+	while not rospy.is_shutdown():
+		msg.data = msg.data *-1
+		#targ2.publish(msg)
+		
+
+
+
+if __name__ == '__main__':
+	rospy.init_node('robotplan')
+	targ2 = rospy.Publisher('myTarget',Int16)
+	decision()
+	rospy.spin()

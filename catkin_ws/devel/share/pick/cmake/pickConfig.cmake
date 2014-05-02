@@ -1,5 +1,17 @@
 # generated from catkin/cmake/template/pkgConfig.cmake.in
 
+# append elements to a list and remove existing duplicates from the list
+# copied from catkin/cmake/list_append_deduplicate.cmake to keep pkgConfig
+# self contained
+macro(_list_append_deduplicate listname)
+  if(NOT "${ARGN}" STREQUAL "")
+    if(${listname})
+      list(REMOVE_ITEM ${listname} ${ARGN})
+    endif()
+    list(APPEND ${listname} ${ARGN})
+  endif()
+endmacro()
+
 # append elements to a list if they are not already in the list
 # copied from catkin/cmake/list_append_unique.cmake to keep pkgConfig
 # self contained
@@ -12,43 +24,39 @@ macro(_list_append_unique listname)
   endforeach()
 endmacro()
 
-# remove duplicate libraries, generalized from PCLConfig.cmake.in
-macro(_remove_duplicate_libraries _unfiltered_libraries _final_filtered_libraries)
-  set(_filtered_libraries)
-  set(_debug_libraries)
-  set(_optimized_libraries)
-  set(_other_libraries)
-  set(_waiting_for_debug 0)
-  set(_waiting_for_optimized 0)
-  set(_library_position -1)
-  foreach(library ${${_unfiltered_libraries}})
-    if("${library}" STREQUAL "debug")
-      set(_waiting_for_debug 1)
-    elseif("${library}" STREQUAL "optimized")
-      set(_waiting_for_optimized 1)
-    elseif(_waiting_for_debug)
-      list(FIND _debug_libraries "${library}" library_position)
-      if(library_position EQUAL -1)
-        list(APPEND ${_filtered_libraries} debug ${library})
-        list(APPEND _debug_libraries ${library})
+# pack a list of libraries with optional build configuration keywords
+# copied from catkin/cmake/catkin_libraries.cmake to keep pkgConfig
+# self contained
+macro(_pack_libraries_with_build_configuration VAR)
+  set(${VAR} "")
+  set(_argn ${ARGN})
+  list(LENGTH _argn _count)
+  set(_index 0)
+  while(${_index} LESS ${_count})
+    list(GET _argn ${_index} lib)
+    if("${lib}" MATCHES "^debug|optimized|general$")
+      math(EXPR _index "${_index} + 1")
+      if(${_index} EQUAL ${_count})
+        message(FATAL_ERROR "_pack_libraries_with_build_configuration() the list of libraries '${ARGN}' ends with '${lib}' which is a build configuration keyword and must be followed by a library")
       endif()
-      set(_waiting_for_debug 0)
-    elseif(_waiting_for_optimized)
-      list(FIND _optimized_libraries "${library}" library_position)
-      if(library_position EQUAL -1)
-        list(APPEND ${_filtered_libraries} optimized ${library})
-        list(APPEND _optimized_libraries ${library})
-      endif()
-      set(_waiting_for_optimized 0)
-    else("${library}" STREQUAL "debug")
-      list(FIND _other_libraries "${library}" library_position)
-      if(library_position EQUAL -1)
-        list(APPEND ${_filtered_libraries} ${library})
-        list(APPEND _other_libraries ${library})
-      endif()
-    endif("${library}" STREQUAL "debug")
-  endforeach(library)
-  set(_final_filtered_libraries _filtered_libraries)
+      list(GET _argn ${_index} library)
+      list(APPEND ${VAR} "${lib}${CATKIN_BUILD_CONFIGURATION_KEYWORD_SEPARATOR}${library}")
+    else()
+      list(APPEND ${VAR} "${lib}")
+    endif()
+    math(EXPR _index "${_index} + 1")
+  endwhile()
+endmacro()
+
+# unpack a list of libraries with optional build configuration keyword prefixes
+# copied from catkin/cmake/catkin_libraries.cmake to keep pkgConfig
+# self contained
+macro(_unpack_libraries_with_build_configuration VAR)
+  set(${VAR} "")
+  foreach(lib ${ARGN})
+    string(REGEX REPLACE "^(debug|optimized|general)${CATKIN_BUILD_CONFIGURATION_KEYWORD_SEPARATOR}(.+)$" "\\1;\\2" lib "${lib}")
+    list(APPEND ${VAR} "${lib}")
+  endforeach()
 endmacro()
 
 
@@ -83,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(pick_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "" STREQUAL "")
+if(NOT "/home/taylor/src/ros/catkin_ws/devel/include;/home/taylor/src/ros/catkin_ws/src/pick/include" STREQUAL "")
   set(pick_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/taylor/src/ros/catkin_ws/devel/include;/home/taylor/src/ros/catkin_ws/src/pick/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -101,9 +109,12 @@ if(NOT "" STREQUAL "")
   endforeach()
 endif()
 
-set(libraries "")
+set(libraries "pick")
 foreach(library ${libraries})
-  if(TARGET ${library})
+  # keep build configuration keywords, target names and absolute libraries as-is
+  if("${library}" MATCHES "^debug|optimized|general$")
+    list(APPEND pick_LIBRARIES ${library})
+  elseif(TARGET ${library})
     list(APPEND pick_LIBRARIES ${library})
   elseif(IS_ABSOLUTE ${library})
     list(APPEND pick_LIBRARIES ${library})
@@ -134,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(pick_EXPORTED_TARGETS "")
+set(pick_EXPORTED_TARGETS "pick_generate_messages_cpp;pick_generate_messages_lisp;pick_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${pick_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -142,7 +153,7 @@ foreach(t ${pick_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "pcl_conversions;pcl_ros;roscpp;sensor_msgs;rospy;std_msgs;message_runtime;rospkg")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -159,16 +170,19 @@ foreach(depend ${depends})
     find_package(${pick_dep} REQUIRED ${depend_list})
   endif()
   _list_append_unique(pick_INCLUDE_DIRS ${${pick_dep}_INCLUDE_DIRS})
-  list(APPEND pick_LIBRARIES ${${pick_dep}_LIBRARIES})
+
+  # merge build configuration keywords with library names to correctly deduplicate
+  _pack_libraries_with_build_configuration(pick_LIBRARIES ${pick_LIBRARIES})
+  _pack_libraries_with_build_configuration(_libraries ${${pick_dep}_LIBRARIES})
+  _list_append_deduplicate(pick_LIBRARIES ${_libraries})
+  # undo build configuration keyword merging after deduplication
+  _unpack_libraries_with_build_configuration(pick_LIBRARIES ${pick_LIBRARIES})
+
   _list_append_unique(pick_LIBRARY_DIRS ${${pick_dep}_LIBRARY_DIRS})
   list(APPEND pick_EXPORTED_TARGETS ${${pick_dep}_EXPORTED_TARGETS})
 endforeach()
 
-if(pick_LIBRARIES)
-  _remove_duplicate_libraries(pick_LIBRARIES pick_LIBRARIES)
-endif()
-
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "pick-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${pick_DIR}/${extra})

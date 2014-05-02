@@ -35,6 +35,9 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# The program to use to edit the cache.
+CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /home/taylor/src/ros/catkin_ws/src
 
@@ -46,8 +49,8 @@ CMAKE_BINARY_DIR = /home/taylor/src/ros/catkin_ws/build
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running interactive CMake command-line interface..."
-	/usr/bin/cmake -i .
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -147,18 +150,368 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-pick/CMakeFiles/marker_test.dir/rule:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/marker_test.dir/rule
-.PHONY : pick/CMakeFiles/marker_test.dir/rule
+pick/CMakeFiles/actionlib_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
-marker_test: pick/CMakeFiles/marker_test.dir/rule
-.PHONY : marker_test
+actionlib_generate_messages_cpp: pick/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
+.PHONY : actionlib_generate_messages_cpp
 
 # fast build rule for target.
-marker_test/fast:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/build
-.PHONY : marker_test/fast
+actionlib_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make pick/CMakeFiles/actionlib_generate_messages_cpp.dir/build
+.PHONY : actionlib_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_lisp: pick/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+.PHONY : actionlib_generate_messages_lisp
+
+# fast build rule for target.
+actionlib_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make pick/CMakeFiles/actionlib_generate_messages_lisp.dir/build
+.PHONY : actionlib_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/actionlib_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_generate_messages_py.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_py: pick/CMakeFiles/actionlib_generate_messages_py.dir/rule
+.PHONY : actionlib_generate_messages_py
+
+# fast build rule for target.
+actionlib_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_generate_messages_py.dir/build.make pick/CMakeFiles/actionlib_generate_messages_py.dir/build
+.PHONY : actionlib_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+actionlib_msgs_generate_messages_cpp: pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/rule
+.PHONY : actionlib_msgs_generate_messages_cpp
+
+# fast build rule for target.
+actionlib_msgs_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make pick/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build
+.PHONY : actionlib_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+actionlib_msgs_generate_messages_lisp: pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
+.PHONY : actionlib_msgs_generate_messages_lisp
+
+# fast build rule for target.
+actionlib_msgs_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build.make pick/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/build
+.PHONY : actionlib_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+actionlib_msgs_generate_messages_py: pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/rule
+.PHONY : actionlib_msgs_generate_messages_py
+
+# fast build rule for target.
+actionlib_msgs_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build.make pick/CMakeFiles/actionlib_msgs_generate_messages_py.dir/build
+.PHONY : actionlib_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/bond_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/bond_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/bond_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_cpp: pick/CMakeFiles/bond_generate_messages_cpp.dir/rule
+.PHONY : bond_generate_messages_cpp
+
+# fast build rule for target.
+bond_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/bond_generate_messages_cpp.dir/build.make pick/CMakeFiles/bond_generate_messages_cpp.dir/build
+.PHONY : bond_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/bond_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/bond_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/bond_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_lisp: pick/CMakeFiles/bond_generate_messages_lisp.dir/rule
+.PHONY : bond_generate_messages_lisp
+
+# fast build rule for target.
+bond_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/bond_generate_messages_lisp.dir/build.make pick/CMakeFiles/bond_generate_messages_lisp.dir/build
+.PHONY : bond_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/bond_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/bond_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/bond_generate_messages_py.dir/rule
+
+# Convenience name for target.
+bond_generate_messages_py: pick/CMakeFiles/bond_generate_messages_py.dir/rule
+.PHONY : bond_generate_messages_py
+
+# fast build rule for target.
+bond_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/bond_generate_messages_py.dir/build.make pick/CMakeFiles/bond_generate_messages_py.dir/build
+.PHONY : bond_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+dynamic_reconfigure_generate_messages_cpp: pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/rule
+.PHONY : dynamic_reconfigure_generate_messages_cpp
+
+# fast build rule for target.
+dynamic_reconfigure_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build.make pick/CMakeFiles/dynamic_reconfigure_generate_messages_cpp.dir/build
+.PHONY : dynamic_reconfigure_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+dynamic_reconfigure_generate_messages_lisp: pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/rule
+.PHONY : dynamic_reconfigure_generate_messages_lisp
+
+# fast build rule for target.
+dynamic_reconfigure_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/build.make pick/CMakeFiles/dynamic_reconfigure_generate_messages_lisp.dir/build
+.PHONY : dynamic_reconfigure_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/rule
+
+# Convenience name for target.
+dynamic_reconfigure_generate_messages_py: pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/rule
+.PHONY : dynamic_reconfigure_generate_messages_py
+
+# fast build rule for target.
+dynamic_reconfigure_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/build.make pick/CMakeFiles/dynamic_reconfigure_generate_messages_py.dir/build
+.PHONY : dynamic_reconfigure_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/nodelet_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_cpp: pick/CMakeFiles/nodelet_generate_messages_cpp.dir/rule
+.PHONY : nodelet_generate_messages_cpp
+
+# fast build rule for target.
+nodelet_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/nodelet_generate_messages_cpp.dir/build.make pick/CMakeFiles/nodelet_generate_messages_cpp.dir/build
+.PHONY : nodelet_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/nodelet_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_lisp: pick/CMakeFiles/nodelet_generate_messages_lisp.dir/rule
+.PHONY : nodelet_generate_messages_lisp
+
+# fast build rule for target.
+nodelet_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/nodelet_generate_messages_lisp.dir/build.make pick/CMakeFiles/nodelet_generate_messages_lisp.dir/build
+.PHONY : nodelet_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/nodelet_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/nodelet_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/nodelet_generate_messages_py.dir/rule
+
+# Convenience name for target.
+nodelet_generate_messages_py: pick/CMakeFiles/nodelet_generate_messages_py.dir/rule
+.PHONY : nodelet_generate_messages_py
+
+# fast build rule for target.
+nodelet_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/nodelet_generate_messages_py.dir/build.make pick/CMakeFiles/nodelet_generate_messages_py.dir/build
+.PHONY : nodelet_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+pcl_msgs_generate_messages_cpp: pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/rule
+.PHONY : pcl_msgs_generate_messages_cpp
+
+# fast build rule for target.
+pcl_msgs_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/build.make pick/CMakeFiles/pcl_msgs_generate_messages_cpp.dir/build
+.PHONY : pcl_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+pcl_msgs_generate_messages_lisp: pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/rule
+.PHONY : pcl_msgs_generate_messages_lisp
+
+# fast build rule for target.
+pcl_msgs_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/build.make pick/CMakeFiles/pcl_msgs_generate_messages_lisp.dir/build
+.PHONY : pcl_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+pcl_msgs_generate_messages_py: pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/rule
+.PHONY : pcl_msgs_generate_messages_py
+
+# fast build rule for target.
+pcl_msgs_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/build.make pick/CMakeFiles/pcl_msgs_generate_messages_py.dir/build
+.PHONY : pcl_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pcl_ros_gencfg.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pcl_ros_gencfg.dir/rule
+.PHONY : pick/CMakeFiles/pcl_ros_gencfg.dir/rule
+
+# Convenience name for target.
+pcl_ros_gencfg: pick/CMakeFiles/pcl_ros_gencfg.dir/rule
+.PHONY : pcl_ros_gencfg
+
+# fast build rule for target.
+pcl_ros_gencfg/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pcl_ros_gencfg.dir/build.make pick/CMakeFiles/pcl_ros_gencfg.dir/build
+.PHONY : pcl_ros_gencfg/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_gencpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_gencpp.dir/rule
+.PHONY : pick/CMakeFiles/pick_gencpp.dir/rule
+
+# Convenience name for target.
+pick_gencpp: pick/CMakeFiles/pick_gencpp.dir/rule
+.PHONY : pick_gencpp
+
+# fast build rule for target.
+pick_gencpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_gencpp.dir/build.make pick/CMakeFiles/pick_gencpp.dir/build
+.PHONY : pick_gencpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_generate_messages.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_generate_messages.dir/rule
+.PHONY : pick/CMakeFiles/pick_generate_messages.dir/rule
+
+# Convenience name for target.
+pick_generate_messages: pick/CMakeFiles/pick_generate_messages.dir/rule
+.PHONY : pick_generate_messages
+
+# fast build rule for target.
+pick_generate_messages/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_generate_messages.dir/build.make pick/CMakeFiles/pick_generate_messages.dir/build
+.PHONY : pick_generate_messages/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/pick_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+pick_generate_messages_cpp: pick/CMakeFiles/pick_generate_messages_cpp.dir/rule
+.PHONY : pick_generate_messages_cpp
+
+# fast build rule for target.
+pick_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_generate_messages_cpp.dir/build.make pick/CMakeFiles/pick_generate_messages_cpp.dir/build
+.PHONY : pick_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/pick_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+pick_generate_messages_lisp: pick/CMakeFiles/pick_generate_messages_lisp.dir/rule
+.PHONY : pick_generate_messages_lisp
+
+# fast build rule for target.
+pick_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_generate_messages_lisp.dir/build.make pick/CMakeFiles/pick_generate_messages_lisp.dir/build
+.PHONY : pick_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/pick_generate_messages_py.dir/rule
+
+# Convenience name for target.
+pick_generate_messages_py: pick/CMakeFiles/pick_generate_messages_py.dir/rule
+.PHONY : pick_generate_messages_py
+
+# fast build rule for target.
+pick_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_generate_messages_py.dir/build.make pick/CMakeFiles/pick_generate_messages_py.dir/build
+.PHONY : pick_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_genlisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_genlisp.dir/rule
+.PHONY : pick/CMakeFiles/pick_genlisp.dir/rule
+
+# Convenience name for target.
+pick_genlisp: pick/CMakeFiles/pick_genlisp.dir/rule
+.PHONY : pick_genlisp
+
+# fast build rule for target.
+pick_genlisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_genlisp.dir/build.make pick/CMakeFiles/pick_genlisp.dir/build
+.PHONY : pick_genlisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/pick_genpy.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/pick_genpy.dir/rule
+.PHONY : pick/CMakeFiles/pick_genpy.dir/rule
+
+# Convenience name for target.
+pick_genpy: pick/CMakeFiles/pick_genpy.dir/rule
+.PHONY : pick_genpy
+
+# fast build rule for target.
+pick_genpy/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/pick_genpy.dir/build.make pick/CMakeFiles/pick_genpy.dir/build
+.PHONY : pick_genpy/fast
 
 # Convenience name for target.
 pick/CMakeFiles/picked_icp.dir/rule:
@@ -189,42 +542,270 @@ picked_segmentation/fast:
 .PHONY : picked_segmentation/fast
 
 # Convenience name for target.
-pick/CMakeFiles/transform_test.dir/rule:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/transform_test.dir/rule
-.PHONY : pick/CMakeFiles/transform_test.dir/rule
+pick/CMakeFiles/publish_instruction_image.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/publish_instruction_image.dir/rule
+.PHONY : pick/CMakeFiles/publish_instruction_image.dir/rule
 
 # Convenience name for target.
-transform_test: pick/CMakeFiles/transform_test.dir/rule
-.PHONY : transform_test
+publish_instruction_image: pick/CMakeFiles/publish_instruction_image.dir/rule
+.PHONY : publish_instruction_image
 
 # fast build rule for target.
-transform_test/fast:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/build
-.PHONY : transform_test/fast
+publish_instruction_image/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_instruction_image.dir/build.make pick/CMakeFiles/publish_instruction_image.dir/build
+.PHONY : publish_instruction_image/fast
 
-src/marker_test.o: src/marker_test.cpp.o
-.PHONY : src/marker_test.o
+# Convenience name for target.
+pick/CMakeFiles/publish_part_image.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/publish_part_image.dir/rule
+.PHONY : pick/CMakeFiles/publish_part_image.dir/rule
 
-# target to build an object file
-src/marker_test.cpp.o:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/src/marker_test.cpp.o
-.PHONY : src/marker_test.cpp.o
+# Convenience name for target.
+publish_part_image: pick/CMakeFiles/publish_part_image.dir/rule
+.PHONY : publish_part_image
 
-src/marker_test.i: src/marker_test.cpp.i
-.PHONY : src/marker_test.i
+# fast build rule for target.
+publish_part_image/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_part_image.dir/build.make pick/CMakeFiles/publish_part_image.dir/build
+.PHONY : publish_part_image/fast
 
-# target to preprocess a source file
-src/marker_test.cpp.i:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/src/marker_test.cpp.i
-.PHONY : src/marker_test.cpp.i
+# Convenience name for target.
+pick/CMakeFiles/publish_scene.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/publish_scene.dir/rule
+.PHONY : pick/CMakeFiles/publish_scene.dir/rule
 
-src/marker_test.s: src/marker_test.cpp.s
-.PHONY : src/marker_test.s
+# Convenience name for target.
+publish_scene: pick/CMakeFiles/publish_scene.dir/rule
+.PHONY : publish_scene
 
-# target to generate assembly for a file
-src/marker_test.cpp.s:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/marker_test.dir/build.make pick/CMakeFiles/marker_test.dir/src/marker_test.cpp.s
-.PHONY : src/marker_test.cpp.s
+# fast build rule for target.
+publish_scene/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_scene.dir/build.make pick/CMakeFiles/publish_scene.dir/build
+.PHONY : publish_scene/fast
+
+# Convenience name for target.
+pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_cpp: pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+.PHONY : sensor_msgs_generate_messages_cpp
+
+# fast build rule for target.
+sensor_msgs_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make pick/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
+.PHONY : sensor_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_lisp: pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+.PHONY : sensor_msgs_generate_messages_lisp
+
+# fast build rule for target.
+sensor_msgs_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make pick/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
+.PHONY : sensor_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_py: pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+.PHONY : sensor_msgs_generate_messages_py
+
+# fast build rule for target.
+sensor_msgs_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make pick/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
+.PHONY : sensor_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/study_buttons.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/study_buttons.dir/rule
+.PHONY : pick/CMakeFiles/study_buttons.dir/rule
+
+# Convenience name for target.
+study_buttons: pick/CMakeFiles/study_buttons.dir/rule
+.PHONY : study_buttons
+
+# fast build rule for target.
+study_buttons/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/study_buttons.dir/build.make pick/CMakeFiles/study_buttons.dir/build
+.PHONY : study_buttons/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+tf2_msgs_generate_messages_cpp: pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/rule
+.PHONY : tf2_msgs_generate_messages_cpp
+
+# fast build rule for target.
+tf2_msgs_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make pick/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
+.PHONY : tf2_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+tf2_msgs_generate_messages_lisp: pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/rule
+.PHONY : tf2_msgs_generate_messages_lisp
+
+# fast build rule for target.
+tf2_msgs_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build.make pick/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/build
+.PHONY : tf2_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+tf2_msgs_generate_messages_py: pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
+.PHONY : tf2_msgs_generate_messages_py
+
+# fast build rule for target.
+tf2_msgs_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make pick/CMakeFiles/tf2_msgs_generate_messages_py.dir/build
+.PHONY : tf2_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/tf_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+tf_generate_messages_cpp: pick/CMakeFiles/tf_generate_messages_cpp.dir/rule
+.PHONY : tf_generate_messages_cpp
+
+# fast build rule for target.
+tf_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf_generate_messages_cpp.dir/build.make pick/CMakeFiles/tf_generate_messages_cpp.dir/build
+.PHONY : tf_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/tf_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+tf_generate_messages_lisp: pick/CMakeFiles/tf_generate_messages_lisp.dir/rule
+.PHONY : tf_generate_messages_lisp
+
+# fast build rule for target.
+tf_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf_generate_messages_lisp.dir/build.make pick/CMakeFiles/tf_generate_messages_lisp.dir/build
+.PHONY : tf_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/tf_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/tf_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/tf_generate_messages_py.dir/rule
+
+# Convenience name for target.
+tf_generate_messages_py: pick/CMakeFiles/tf_generate_messages_py.dir/rule
+.PHONY : tf_generate_messages_py
+
+# fast build rule for target.
+tf_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/tf_generate_messages_py.dir/build.make pick/CMakeFiles/tf_generate_messages_py.dir/build
+.PHONY : tf_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+topic_tools_generate_messages_cpp: pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/rule
+.PHONY : topic_tools_generate_messages_cpp
+
+# fast build rule for target.
+topic_tools_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/build.make pick/CMakeFiles/topic_tools_generate_messages_cpp.dir/build
+.PHONY : topic_tools_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+topic_tools_generate_messages_lisp: pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/rule
+.PHONY : topic_tools_generate_messages_lisp
+
+# fast build rule for target.
+topic_tools_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/build.make pick/CMakeFiles/topic_tools_generate_messages_lisp.dir/build
+.PHONY : topic_tools_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/topic_tools_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/topic_tools_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/topic_tools_generate_messages_py.dir/rule
+
+# Convenience name for target.
+topic_tools_generate_messages_py: pick/CMakeFiles/topic_tools_generate_messages_py.dir/rule
+.PHONY : topic_tools_generate_messages_py
+
+# fast build rule for target.
+topic_tools_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/topic_tools_generate_messages_py.dir/build.make pick/CMakeFiles/topic_tools_generate_messages_py.dir/build
+.PHONY : topic_tools_generate_messages_py/fast
+
+# Convenience name for target.
+pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule
+.PHONY : pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_cpp: pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule
+.PHONY : visualization_msgs_generate_messages_cpp
+
+# fast build rule for target.
+visualization_msgs_generate_messages_cpp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build.make pick/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build
+.PHONY : visualization_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule
+.PHONY : pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_lisp: pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule
+.PHONY : visualization_msgs_generate_messages_lisp
+
+# fast build rule for target.
+visualization_msgs_generate_messages_lisp/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make pick/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
+.PHONY : visualization_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
+.PHONY : pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_py: pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
+.PHONY : visualization_msgs_generate_messages_py
+
+# fast build rule for target.
+visualization_msgs_generate_messages_py/fast:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make pick/CMakeFiles/visualization_msgs_generate_messages_py.dir/build
+.PHONY : visualization_msgs_generate_messages_py/fast
 
 src/picked_icp.o: src/picked_icp.cpp.o
 .PHONY : src/picked_icp.o
@@ -274,29 +855,101 @@ src/picked_segmentation.cpp.s:
 	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/picked_segmentation.dir/build.make pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.s
 .PHONY : src/picked_segmentation.cpp.s
 
-src/transform_test.o: src/transform_test.cpp.o
-.PHONY : src/transform_test.o
+src/publish_instruction_image.o: src/publish_instruction_image.cpp.o
+.PHONY : src/publish_instruction_image.o
 
 # target to build an object file
-src/transform_test.cpp.o:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/src/transform_test.cpp.o
-.PHONY : src/transform_test.cpp.o
+src/publish_instruction_image.cpp.o:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_instruction_image.dir/build.make pick/CMakeFiles/publish_instruction_image.dir/src/publish_instruction_image.cpp.o
+.PHONY : src/publish_instruction_image.cpp.o
 
-src/transform_test.i: src/transform_test.cpp.i
-.PHONY : src/transform_test.i
+src/publish_instruction_image.i: src/publish_instruction_image.cpp.i
+.PHONY : src/publish_instruction_image.i
 
 # target to preprocess a source file
-src/transform_test.cpp.i:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/src/transform_test.cpp.i
-.PHONY : src/transform_test.cpp.i
+src/publish_instruction_image.cpp.i:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_instruction_image.dir/build.make pick/CMakeFiles/publish_instruction_image.dir/src/publish_instruction_image.cpp.i
+.PHONY : src/publish_instruction_image.cpp.i
 
-src/transform_test.s: src/transform_test.cpp.s
-.PHONY : src/transform_test.s
+src/publish_instruction_image.s: src/publish_instruction_image.cpp.s
+.PHONY : src/publish_instruction_image.s
 
 # target to generate assembly for a file
-src/transform_test.cpp.s:
-	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/transform_test.dir/build.make pick/CMakeFiles/transform_test.dir/src/transform_test.cpp.s
-.PHONY : src/transform_test.cpp.s
+src/publish_instruction_image.cpp.s:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_instruction_image.dir/build.make pick/CMakeFiles/publish_instruction_image.dir/src/publish_instruction_image.cpp.s
+.PHONY : src/publish_instruction_image.cpp.s
+
+src/publish_part_image.o: src/publish_part_image.cpp.o
+.PHONY : src/publish_part_image.o
+
+# target to build an object file
+src/publish_part_image.cpp.o:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_part_image.dir/build.make pick/CMakeFiles/publish_part_image.dir/src/publish_part_image.cpp.o
+.PHONY : src/publish_part_image.cpp.o
+
+src/publish_part_image.i: src/publish_part_image.cpp.i
+.PHONY : src/publish_part_image.i
+
+# target to preprocess a source file
+src/publish_part_image.cpp.i:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_part_image.dir/build.make pick/CMakeFiles/publish_part_image.dir/src/publish_part_image.cpp.i
+.PHONY : src/publish_part_image.cpp.i
+
+src/publish_part_image.s: src/publish_part_image.cpp.s
+.PHONY : src/publish_part_image.s
+
+# target to generate assembly for a file
+src/publish_part_image.cpp.s:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_part_image.dir/build.make pick/CMakeFiles/publish_part_image.dir/src/publish_part_image.cpp.s
+.PHONY : src/publish_part_image.cpp.s
+
+src/publish_scene.o: src/publish_scene.cpp.o
+.PHONY : src/publish_scene.o
+
+# target to build an object file
+src/publish_scene.cpp.o:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_scene.dir/build.make pick/CMakeFiles/publish_scene.dir/src/publish_scene.cpp.o
+.PHONY : src/publish_scene.cpp.o
+
+src/publish_scene.i: src/publish_scene.cpp.i
+.PHONY : src/publish_scene.i
+
+# target to preprocess a source file
+src/publish_scene.cpp.i:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_scene.dir/build.make pick/CMakeFiles/publish_scene.dir/src/publish_scene.cpp.i
+.PHONY : src/publish_scene.cpp.i
+
+src/publish_scene.s: src/publish_scene.cpp.s
+.PHONY : src/publish_scene.s
+
+# target to generate assembly for a file
+src/publish_scene.cpp.s:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/publish_scene.dir/build.make pick/CMakeFiles/publish_scene.dir/src/publish_scene.cpp.s
+.PHONY : src/publish_scene.cpp.s
+
+src/study_buttons.o: src/study_buttons.cpp.o
+.PHONY : src/study_buttons.o
+
+# target to build an object file
+src/study_buttons.cpp.o:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/study_buttons.dir/build.make pick/CMakeFiles/study_buttons.dir/src/study_buttons.cpp.o
+.PHONY : src/study_buttons.cpp.o
+
+src/study_buttons.i: src/study_buttons.cpp.i
+.PHONY : src/study_buttons.i
+
+# target to preprocess a source file
+src/study_buttons.cpp.i:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/study_buttons.dir/build.make pick/CMakeFiles/study_buttons.dir/src/study_buttons.cpp.i
+.PHONY : src/study_buttons.cpp.i
+
+src/study_buttons.s: src/study_buttons.cpp.s
+.PHONY : src/study_buttons.s
+
+# target to generate assembly for a file
+src/study_buttons.cpp.s:
+	cd /home/taylor/src/ros/catkin_ws/build && $(MAKE) -f pick/CMakeFiles/study_buttons.dir/build.make pick/CMakeFiles/study_buttons.dir/src/study_buttons.cpp.s
+.PHONY : src/study_buttons.cpp.s
 
 # Help Target
 help:
@@ -304,29 +957,78 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... actionlib_generate_messages_cpp"
+	@echo "... actionlib_generate_messages_lisp"
+	@echo "... actionlib_generate_messages_py"
+	@echo "... actionlib_msgs_generate_messages_cpp"
+	@echo "... actionlib_msgs_generate_messages_lisp"
+	@echo "... actionlib_msgs_generate_messages_py"
+	@echo "... bond_generate_messages_cpp"
+	@echo "... bond_generate_messages_lisp"
+	@echo "... bond_generate_messages_py"
+	@echo "... dynamic_reconfigure_generate_messages_cpp"
+	@echo "... dynamic_reconfigure_generate_messages_lisp"
+	@echo "... dynamic_reconfigure_generate_messages_py"
 	@echo "... edit_cache"
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
-	@echo "... marker_test"
+	@echo "... nodelet_generate_messages_cpp"
+	@echo "... nodelet_generate_messages_lisp"
+	@echo "... nodelet_generate_messages_py"
+	@echo "... pcl_msgs_generate_messages_cpp"
+	@echo "... pcl_msgs_generate_messages_lisp"
+	@echo "... pcl_msgs_generate_messages_py"
+	@echo "... pcl_ros_gencfg"
+	@echo "... pick_gencpp"
+	@echo "... pick_generate_messages"
+	@echo "... pick_generate_messages_cpp"
+	@echo "... pick_generate_messages_lisp"
+	@echo "... pick_generate_messages_py"
+	@echo "... pick_genlisp"
+	@echo "... pick_genpy"
 	@echo "... picked_icp"
 	@echo "... picked_segmentation"
+	@echo "... publish_instruction_image"
+	@echo "... publish_part_image"
+	@echo "... publish_scene"
 	@echo "... rebuild_cache"
+	@echo "... sensor_msgs_generate_messages_cpp"
+	@echo "... sensor_msgs_generate_messages_lisp"
+	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... study_buttons"
 	@echo "... test"
-	@echo "... transform_test"
-	@echo "... src/marker_test.o"
-	@echo "... src/marker_test.i"
-	@echo "... src/marker_test.s"
+	@echo "... tf2_msgs_generate_messages_cpp"
+	@echo "... tf2_msgs_generate_messages_lisp"
+	@echo "... tf2_msgs_generate_messages_py"
+	@echo "... tf_generate_messages_cpp"
+	@echo "... tf_generate_messages_lisp"
+	@echo "... tf_generate_messages_py"
+	@echo "... topic_tools_generate_messages_cpp"
+	@echo "... topic_tools_generate_messages_lisp"
+	@echo "... topic_tools_generate_messages_py"
+	@echo "... visualization_msgs_generate_messages_cpp"
+	@echo "... visualization_msgs_generate_messages_lisp"
+	@echo "... visualization_msgs_generate_messages_py"
 	@echo "... src/picked_icp.o"
 	@echo "... src/picked_icp.i"
 	@echo "... src/picked_icp.s"
 	@echo "... src/picked_segmentation.o"
 	@echo "... src/picked_segmentation.i"
 	@echo "... src/picked_segmentation.s"
-	@echo "... src/transform_test.o"
-	@echo "... src/transform_test.i"
-	@echo "... src/transform_test.s"
+	@echo "... src/publish_instruction_image.o"
+	@echo "... src/publish_instruction_image.i"
+	@echo "... src/publish_instruction_image.s"
+	@echo "... src/publish_part_image.o"
+	@echo "... src/publish_part_image.i"
+	@echo "... src/publish_part_image.s"
+	@echo "... src/publish_scene.o"
+	@echo "... src/publish_scene.i"
+	@echo "... src/publish_scene.s"
+	@echo "... src/study_buttons.o"
+	@echo "... src/study_buttons.i"
+	@echo "... src/study_buttons.s"
 .PHONY : help
 
 

@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "publish_image")
+set(publish_image_MAINTAINER "taylor <finley.taylor@gmail.com>")
+set(publish_image_DEPRECATED "")
+set(publish_image_VERSION "1.0.0")
+set(publish_image_BUILD_DEPENDS "cv_bridge" "OpenCV")
+set(publish_image_RUN_DEPENDS "cv_bridge" "OpenCV")
+set(publish_image_BUILDTOOL_DEPENDS "catkin")

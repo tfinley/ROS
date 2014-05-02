@@ -1,0 +1,81 @@
+#include <ros/ros.h>
+#include <rosbag/bag.h>
+#include <sensor_msgs/Image.h>
+#include <sensor_msgs/CameraInfo.h>
+#include <boost/foreach.hpp>
+
+int main(int argc, char **argv) {
+	ros::init(argc, argv, "publish_scene");
+
+	ros::NodeHandle n;
+
+	ros::Publisher d_info_pub = n.advertise<std_msgs::String>("scene/depth/camera_info", 1);
+	ros::Publisher d_points_pub = n.advertise<std_msgs::String>("scene/depth/points", 1);
+	ros::Publisher rgb_info_pub = n.advertise<std_msgs::String>("scene/rgb/camera_info", 1);
+	ros::Publisher rgb_image_pub = n.advertise<std_msgs::String>("scene/rgb/image", 1);
+	ros::Publisher tf_pub = n.advertise<std_msgs::String>("scene/tf", 1);
+	ros::Rate loop_rate(10);
+
+while (ros::ok()){
+
+	rosbag::Bag bag;
+  bag.open("/home/taylor/src/ros/catkin_ws/src/pick/scenes/scene_01.bag", rosbag::bagmode::Read);
+
+	std::string depth_cam_info = "/camera/depth_registered/camera_info";
+  std::string depth_points = "/camera/depth_registered/points";
+  std::string rgb_cam_info = "/camera/rgb/camera_info";
+  std::string rgb_cam_image = "/camera/rgb/image_color";
+  std::string tfs = "/tf";
+
+  std::vector<std::string> topics;
+  topics.push_back(depth_cam_info);
+  topics.push_back(depth_points);
+  topics.push_back(rgb_cam_info);
+  topics.push_back(rgb_cam_image);
+  topics.push_back(tfs);
+
+    rosbag::View view(bag, rosbag::TopicQuery(topics));
+
+    BOOST_FOREACH(rosbag::MessageInstance const m, view)
+  {
+    if (m.getTopic() == depth_cam_info || ("/" + m.getTopic() == depth_cam_info))
+    {
+      sensor_msgs::CameraInfo::ConstPtr d_info_ptr = m.instantiate<sensor_msgs::CameraInfo>();
+      if (d_info_ptr != NULL)
+        //publish d_points_ptr
+    }
+    
+    if (m.getTopic() == depth_points || ("/" + m.getTopic() == depth_points))
+    {
+      sensor_msgs::PointCloud2::ConstPtr d_points_ptr = m.instantiate<sensor_msgs::PointCloud2>();
+      if (d_points_ptr != NULL)
+        //publish 
+    }
+    
+    if (m.getTopic() == rgb_cam_info || ("/" + m.getTopic() == rgb_cam_info))
+    {
+      sensor_msgs::CameraInfo::ConstPtr rgb_info_ptr = m.instantiate<sensor_msgs::CameraInfo>();
+      if (rgb_info_ptr != NULL)
+        //publish 
+    }
+    
+    if (m.getTopic() == rgb_cam_image || ("/" + m.getTopic() == rgb_cam_image))
+    {
+      sensor_msgs::Image::ConstPtr rgb_image_ptr = m.instantiate<sensor_msgs::Image>();
+      if (rgb_image_prt != NULL)
+        //publish 
+    }
+    if (m.getTopic() == tfs || ("/" + m.getTopic() == tfs))
+    {
+      sensor_msgs::CameraInfo::ConstPtr r_info = m.instantiate<sensor_msgs::CameraInfo>();
+      if (r_info != NULL)
+        //publish 
+    }
+  }
+  bag.close();
+}
+
+
+
+}
+  

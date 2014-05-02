@@ -9,6 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   roscpp
   sensor_msgs
+  visualization_msgs
+  interactive_markers
+  roslib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -106,9 +109,8 @@ include_directories(
 ## Declare a cpp executable
 add_executable(picked_segmentation src/picked_segmentation.cpp)
 add_executable(picked_icp src/picked_icp.cpp)
-add_executable(transform_test src/transform_test.cpp)
-add_executable(marker_test src/marker_test.cpp)
-add_executable(interactive_marker_test src/interactive_marker_test.cpp)
+add_executable(test src/test.cpp)
+
 
 
 ## Add cmake target dependencies of the executable/library
@@ -122,15 +124,10 @@ target_link_libraries(picked_segmentation
 target_link_libraries(picked_icp
    ${catkin_LIBRARIES}
  )
-target_link_libraries(transform_test
+target_link_libraries(test
    ${catkin_LIBRARIES}
  )
-target_link_libraries(marker_test
-   ${catkin_LIBRARIES}
- )
-target_link_libraries(interactive_marker_test
-   ${catkin_LIBRARIES}
- )
+
 
 
 #############

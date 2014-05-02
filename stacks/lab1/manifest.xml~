@@ -1,0 +1,17 @@
+<package>
+  <description brief="lab1">
+
+     lab1: This node is designed to conrtrol a robot with a laserscan output which this will subsribe to and determine when the robot should stop before it hits a wall. The control will be by publishing a twist msg that the robot is subscribed
+
+  </description>
+  <author>taylor</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/lab1</url>
+  <depend package="std_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+
+</package>
+
+

@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+import roslib; roslib.load_manifest('mort')
+import rospy
+from std_msgs.msg import String, Int16
+from random import randint
+
+#global variables
+maxSupply = 5
+maxFinished = 5
+minPitchTime = 10
+maxPitchTime = 60
+
+class Workbench():
+	""" Manages Workbench 1"""
+	def __init__(self):
+		self.workbenchDown = False
+		self.supply = 2
+		self.finished = 1
+		rospy.Subscriber("mort/Workbench1/supplyGiven", Int16, self.supplyWorkbench)
+		rospy.Subscriber("mort/Workbench1/finishedTaken", Int16, self.pickupFished)
+		self.supply_pub = rospy.Publisher('mort/workbench1/supplyNeed', Int16)
+		self.finished_pub = rospy.Publisher('mort/workbench1/finished', Int16)
+		self.supplyNeed_msg = Int16()
+		self.finished_msg = Int16()
+		while not rospy.is_shutdown():
+			self.statusUpdate()
+			rospy.sleep(1.0)
+			if self.supply > 0:
+				self.doWork()
+			else:
+				rospy.loginfo('Out of supply')
+				
+	def doWork(self):
+		rospy.loginfo('Starting Work on a New Part')
+		rospy.sleep(randint(minPitchTime,maxPitchTime))
+		while self.finished == maxFinished:
+			# loop until parts are removed
+			rospy.loginfo('Finish Queue Full')
+			rospy.sleep(0.5)
+		# move one part from supply to finished
+		self.supply -= 1 
+		self.finished += 1
+		rospy.loginfo('Part Complete')
+		self.statusUpdate()
+			
+	def statusUpdate(self):
+		rospy.loginfo('Workbench 1 Status Update')		
+		rospy.loginfo('Supply: %i,', self.supply)
+		rospy.loginfo('Finished: %i,', self.finished)
+		self.supplyNeed_msg.data = maxSupply - self.supply
+		self.finished_msg.data = self.finished
+		for i in range(1,10):
+			self.supply_pub.publish(self.supplyNeed_msg)
+			self.finished_pub.publish(self.finished_msg)
+		
+	def supplyWorkbench(self, msg):
+		self.supply = self.supply + msg.data
+		rospy.loginfo('Supply Complete of %i parts', msg.data)
+		self.statusUpdate()
+
+	def pickupFished(self, msg):
+		self.finished = self.finished - msg.data
+		rospy.loginfo('Pickup Complete of %i parts', msg.data)
+		self.statusUpdate()
+
+def main():
+	rospy.init_node('mort_workbench_1')
+	worker = Workbench()
+    
+if __name__ == '__main__':
+    main()

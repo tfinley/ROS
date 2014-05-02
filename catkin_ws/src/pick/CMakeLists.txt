@@ -8,7 +8,16 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
   pcl_ros
   roscpp
+  rospy
+  std_msgs
   sensor_msgs
+  geometry_msgs
+  message_generation
+  visualization_msgs
+  interactive_markers
+  roslib
+  cv_bridge
+  image_transport
 )
 
 ## System dependencies are found with CMake's conventions
@@ -45,18 +54,17 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  Num.msg
+)
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  Confirm_Button.srv
+  Reset_Button.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -66,10 +74,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs
-# )
+ generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -81,10 +89,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES pick
-#  CATKIN_DEPENDS pcl_conversions pcl_ros roscpp sensor_msgs
-#  DEPENDS system_lib
+ INCLUDE_DIRS include
+ LIBRARIES pick
+ CATKIN_DEPENDS pcl_conversions pcl_ros roscpp sensor_msgs rospy std_msgs message_runtime rospkg
+ DEPENDS system_lib
 )
 
 ###########
@@ -106,10 +114,10 @@ include_directories(
 ## Declare a cpp executable
 add_executable(picked_segmentation src/picked_segmentation.cpp)
 add_executable(picked_icp src/picked_icp.cpp)
-add_executable(transform_test src/transform_test.cpp)
-add_executable(marker_test src/marker_test.cpp)
-
-
+add_executable(publish_scene src/publish_scene.cpp)
+add_executable(publish_part_image src/publish_part_image.cpp)
+add_executable(publish_instruction_image src/publish_instruction_image.cpp)
+add_executable(study_buttons src/study_buttons.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -122,14 +130,18 @@ target_link_libraries(picked_segmentation
 target_link_libraries(picked_icp
    ${catkin_LIBRARIES}
  )
-target_link_libraries(transform_test
+target_link_libraries(publish_scene
    ${catkin_LIBRARIES}
  )
-target_link_libraries(marker_test
+target_link_libraries(publish_part_image
    ${catkin_LIBRARIES}
  )
-
-
+target_link_libraries(publish_instruction_image
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(study_buttons
+   ${catkin_LIBRARIES}
+ )
 
 #############
 ## Install ##

@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+
+# Author: Taylor Finley
+# Date: 2014.01.22
+# Description: This node is designed to conrtrol a robot with a laserscan
+#				output which this will subsribe to and determine when the 
+#				robot should stop before it hits a wall. The control will
+# 				be by publishing a twist msg that the robot is subscribed
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('lab1')
+import rospy
+
+# The velocity command message
+from geometry_msgs.msg import Twist
+
+
+if __name__ == '__main__':
+    rospy.init_node('move')
+
+    # A publisher for the move data
+    pub = rospy.Publisher('cmd_vel', Twist)
+
+    # Drive forward at a given speed.  The robot points up the x-axis.
+    command = Twist()
+    command.linear.x = 0.1
+    command.linear.y = 0.0
+    command.linear.z = 0.0
+    command.angular.x = 0.0
+    command.angular.y = 0.0
+    command.angular.z = 0.0
+
+    # Loop at 10Hz, publishing movement commands until we shut down.
+    rate = rospy.Rate(10)
+    while not rospy.is_shutdown():
+        pub.publish(command)
+        rate.sleep()

@@ -17,6 +17,7 @@ pick/CMakeFiles/picked_icp.dir/src/picked_icp.cpp.o
  /opt/ros/hydro/include/geometry_msgs/TwistStamped.h
  /opt/ros/hydro/include/geometry_msgs/Vector3.h
  /opt/ros/hydro/include/geometry_msgs/Vector3Stamped.h
+ /opt/ros/hydro/include/interactive_markers/interactive_marker_server.h
  /opt/ros/hydro/include/pcl_conversions/pcl_conversions.h
  /opt/ros/hydro/include/pcl_msgs/ModelCoefficients.h
  /opt/ros/hydro/include/pcl_msgs/PointIndices.h
@@ -27,8 +28,12 @@ pick/CMakeFiles/picked_icp.dir/src/picked_icp.cpp.o
  /opt/ros/hydro/include/ros/advertise_service_options.h
  /opt/ros/hydro/include/ros/assert.h
  /opt/ros/hydro/include/ros/builtin_message_traits.h
+ /opt/ros/hydro/include/ros/callback_queue.h
+ /opt/ros/hydro/include/ros/callback_queue_interface.h
  /opt/ros/hydro/include/ros/common.h
  /opt/ros/hydro/include/ros/console.h
+ /opt/ros/hydro/include/ros/console_backend.h
+ /opt/ros/hydro/include/ros/datatypes.h
  /opt/ros/hydro/include/ros/duration.h
  /opt/ros/hydro/include/ros/exception.h
  /opt/ros/hydro/include/ros/exceptions.h
@@ -43,6 +48,7 @@ pick/CMakeFiles/picked_icp.dir/src/picked_icp.cpp.o
  /opt/ros/hydro/include/ros/message_traits.h
  /opt/ros/hydro/include/ros/names.h
  /opt/ros/hydro/include/ros/node_handle.h
+ /opt/ros/hydro/include/ros/package.h
  /opt/ros/hydro/include/ros/param.h
  /opt/ros/hydro/include/ros/parameter_adapter.h
  /opt/ros/hydro/include/ros/platform.h
@@ -107,7 +113,13 @@ pick/CMakeFiles/picked_icp.dir/src/picked_icp.cpp.o
  /opt/ros/hydro/include/tf2_ros/buffer_interface.h
  /opt/ros/hydro/include/tf2_ros/transform_broadcaster.h
  /opt/ros/hydro/include/tf_conversions/tf_eigen.h
+ /opt/ros/hydro/include/visualization_msgs/InteractiveMarker.h
+ /opt/ros/hydro/include/visualization_msgs/InteractiveMarkerControl.h
+ /opt/ros/hydro/include/visualization_msgs/InteractiveMarkerFeedback.h
+ /opt/ros/hydro/include/visualization_msgs/InteractiveMarkerPose.h
+ /opt/ros/hydro/include/visualization_msgs/InteractiveMarkerUpdate.h
  /opt/ros/hydro/include/visualization_msgs/Marker.h
+ /opt/ros/hydro/include/visualization_msgs/MenuEntry.h
  /usr/include/eigen3/Eigen/Cholesky
  /usr/include/eigen3/Eigen/Core
  /usr/include/eigen3/Eigen/Dense

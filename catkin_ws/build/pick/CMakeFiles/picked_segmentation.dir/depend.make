@@ -18,6 +18,8 @@ pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/builtin_message_traits.h
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/common.h
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/console.h
+pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/console_backend.h
+pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/datatypes.h
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/duration.h
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/exception.h
 pick/CMakeFiles/picked_segmentation.dir/src/picked_segmentation.cpp.o: /opt/ros/hydro/include/ros/exceptions.h

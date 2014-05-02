@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+
+# Author: Taylor Finley
+# Date: 2014.02.18
+# Description: This follows a blob using cmvision. it is a adaptation from http://www.transistor.io/color-blob-tracking-with-ros.html
+
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('me539')
+import rospy 
+import numpy as np
+import math
+from cmvision.msg import Blobs, Blob
+
+# The velocity command message
+from geometry_msgs.msg import Point
+
+# LaserScan message lib
+from sensor_msgs.msg import LaserScan
+
+# Float32 message lib
+#from std_msgs.msg import Float32
+
+# Define global variable
+xCenter = 640/2
+
+def blob_callback(data):
+	blob_position = 0
+	blob_area_total = 0
+	rat = 0.999999999
+	print(blob_position)
+	
+	for obj in data.blobs:
+		blob_area_total = blob_area_total + obj.area
+	for obj in data.blobs:
+		blob_position = blob_position + obj.x * (float(obj.area) / float(blob_area_total))
+	pt = Point()	
+	pt.x = blob_position-xCenter
+	pt.z = blob_area_total
+
+	print (pt)
+
+	# Publish point
+	pub.publish(pt)
+
+
+if __name__ == '__main__':
+	rospy.init_node('blob_tracker')
+
+	# A subscriber to recieve data from the robot's laserscan
+	sub = rospy.Subscriber('/blobs', Blobs, blob_callback)
+
+	# A publisher for blob position
+	pub = rospy.Publisher('blobPoint', Point)
+
+	# A publisher for blob position
+	#pub2 = rospy.Publisher('blobSize', Float32)
+
+	# Do ROS stuff
+	rospy.spin()
+
+   

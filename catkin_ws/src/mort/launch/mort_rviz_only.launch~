@@ -1,0 +1,4 @@
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mort)/rviz/mort.rviz"/>
+	<node name="mort_goal_manager" pkg="mort" type="mort_goal_manager.py" />
+</launch>

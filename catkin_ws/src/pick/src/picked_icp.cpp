@@ -10,6 +10,7 @@ Description: 	Recieve segmented point cloud and picked point
 */
 
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <pcl/point_types.h>
 #include <pcl_ros/point_cloud.h> 
 #include <boost/foreach.hpp> 
@@ -30,8 +31,10 @@ Description: 	Recieve segmented point cloud and picked point
 #include <tf/tf.h>
 #include <tf/tfMessage.h>
 #include <visualization_msgs/Marker.h>
+#include <interactive_markers/interactive_marker_server.h>
 
 using namespace std;
+using namespace visualization_msgs;
 
 //typedefs
 typedef pcl::PointXYZRGB rgbpoint;
@@ -50,9 +53,28 @@ float picked_y = 0.0;
 float picked_z = 0.0;
 bool picked (false);
 bool flipped (false);
+bool needsInitialAlign (true);
+bool noMarkerServer (true);
 cloudrgbptr cloud_source (new cloudrgb());	//Loaded source cloud - should I put this in the align callback?
 cloudrgbptr cloud_translated (new cloudrgb());	//Translated cloud using point
 cloudxyzptr cloud_arrow (new cloudxyz());	//points for arrow
+Eigen::Matrix4f Tm; // Create Translation Matrix and initialize it to null
+/*Tm << 	1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1;
+*/
+boost::shared_ptr<interactive_markers::InteractiveMarkerServer> server;
+
+void processFeedback( const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback )
+{
+  // process the feedback from clicking the arrow interacitve marker. 
+  // this should trigger the arrow to flip with a boolean.
+  std::cout << "button click" << std::endl;
+  if (flipped) flipped = false;
+  else flipped = true; 
+  std::cout << "flipped bool: " << flipped << std::endl;    
+}
 
 void
 flipped_cb (const std_msgs::Bool::ConstPtr& msg)
@@ -69,34 +91,92 @@ point_cb (const boost::shared_ptr<const geometry_msgs::PointStamped>& point_ptr)
   picked_z = point_ptr->point.z;  
   cout << "picked" << endl;
   picked = true;
+	needsInitialAlign = true;
+}
+
+void
+makeMarker ( ) 
+{
+
+	// Create interactive marker for arrow
+	InteractiveMarker int_marker;
+	int_marker.header.frame_id = "/camera_rgb_optical_frame";
+	int_marker.scale = 1;
+	int_marker.name = "button";
+	int_marker.description = "Button\n(Left Click)";
+	InteractiveMarkerControl control;
+	control.interaction_mode = InteractiveMarkerControl::BUTTON;
+	control.name = "button_control";
+
+	// Arrow Marker
+	visualization_msgs::Marker marker;
+	marker.header.frame_id = "/camera_rgb_optical_frame";
+	marker.header.stamp =  ros::Time::now();
+	marker.type = visualization_msgs::Marker::ARROW;
+	marker.action = visualization_msgs::Marker::ADD;
+	marker.id = 0;
+	// Arrow Scale
+	marker.scale.x = 0.015;
+	marker.scale.y = 0.025;
+	marker.scale.z = 0.025;
+	// arrow is red
+	marker.color.r = 1.0;
+	marker.color.a = 0.5;
+	//set center point
+	geometry_msgs::Point p0;
+	p0.x = 0.0;
+	p0.y = 0.0;
+	p0.z = 0.0;
+	marker.points.push_back(p0);
+	//set end point
+	geometry_msgs::Point p1;
+	p1.x = 0.0;
+	p1.y = 0.100;
+	p1.z = 0.0;
+	marker.points.push_back(p1);
+	control.markers.push_back( marker );
+	control.always_visible = true;
+	int_marker.controls.push_back(control);
+	// Publish to server
+	server->insert(int_marker);
+	server->setCallback(int_marker.name, &processFeedback);
+	noMarkerServer = false;
+
 }
 
 void 
 align_cb (const sensor_msgs::PointCloud2ConstPtr& cloud)
 {
-  if (picked)
-  {  
-	cloudrgbptr cloud_segment (new cloudrgb());	//Segmented point cloud from msg
-  	pcl::fromROSMsg(*cloud, *cloud_segment); 	//Convert msg to point cloud
-  	
-	cloudrgbptr cloud_aligned (new cloudrgb());  	//Aligned output from ICP
-  	sensor_msgs::PointCloud2 cloud_aligned_msg;  	//create msg to publish
+	if (picked)
+	{  
+		cloudrgbptr cloud_segment (new cloudrgb());	//Segmented point cloud from msg
+		pcl::fromROSMsg(*cloud, *cloud_segment); 	//Convert msg to point cloud
+		cloudrgbptr cloud_aligned (new cloudrgb());  	//Aligned output from ICP
+		sensor_msgs::PointCloud2 cloud_aligned_msg;  	//create msg to publish
 
-	// Translate       	
-	Eigen::Matrix4f Tm;
-	Tm << 	1, 0, 0, picked_x,
-			0, 1, 0, picked_y,
-			0, 0, 1, picked_z,
-			0, 0, 0, 1;
-	if (flipped) Tm = Tm * Tm180; //flip it if requested per topic
-	pcl::transformPointCloud(*cloud_source, *cloud_translated, Tm);
+		if (needsInitialAlign)
+		{
+			// Set Translation Matrix to the picked point
+			Tm << 	1, 0, 0, picked_x,
+							0, 1, 0, picked_y,
+							0, 0, 1, picked_z,
+							0, 0, 0, 1;
+			needsInitialAlign = false;
+		}		
+		if (flipped) 
+		{
+			Tm = Tm * Tm180; //flip it if requested per topic
+			flipped = false; //flip it only once
+		}
+		// Transform point cloud from initial to picked point
+		pcl::transformPointCloud(*cloud_source, *cloud_translated, Tm);
 
-	// ICP
+		// ICP
 
-	// Setup ICP
+		// Setup ICP
   	pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;
   	icp.setEuclideanFitnessEpsilon (1e-10);
-	icp.setTransformationEpsilon (1e-6);
+		icp.setTransformationEpsilon (1e-6);
   	icp.setMaxCorrespondenceDistance (.1);
   	icp.setMaximumIterations(50);
   	icp.setInputSource(cloud_translated);
@@ -104,18 +184,18 @@ align_cb (const sensor_msgs::PointCloud2ConstPtr& cloud)
 
   	//copy the source cloud
   	cloud_aligned = cloud_translated;
-	Eigen::Matrix4f prev;
+		Eigen::Matrix4f prev;
  
   	//Forced iteractions with ICP loop
   	for (int i = 0; i < 5; ++i)
   	{
     	PCL_INFO ("Iteration Nr. %d.\n", i);
-    	cloud_translated = cloud_aligned; //when you set to pointers equal does it actaully set the point clouds equal?
+    	cloud_translated = cloud_aligned; //set the point clouds equal
     	icp.setInputSource (cloud_translated);
     	icp.align (*cloud_aligned);
 	  	Tm = icp.getFinalTransformation () * Tm;
     	std::cout << "has converged:" << icp.hasConverged() << " score: " << icp.getFitnessScore() << std::endl;
-	  	//added change to each iteration
+	  	// added change to each iteration
 	  	if (fabs ((icp.getLastIncrementalTransformation () - prev).sum ()) < icp.getTransformationEpsilon ())
       		icp.setMaxCorrespondenceDistance (icp.getMaxCorrespondenceDistance () - 0.001);
     	prev = icp.getLastIncrementalTransformation ();
@@ -132,73 +212,57 @@ align_cb (const sensor_msgs::PointCloud2ConstPtr& cloud)
   	//You may have to set the header frame id of the cloud_filtered also
   	pub1.publish (cloud_aligned_msg);
 
-	// Create the transform matrix between the origin and the center of the eye (when imported)
+		// Create the transform matrix between the origin and the center of the eye (when imported)
   	// NOTE:  when imported the origin is at the top of the lifting eye
   	// This is to help when the lifting eye is translated to the picked point (which will probably
   	// be at the top of the lifting eye.
   	Eigen::Matrix4f centerOffset;
   	centerOffset << 1, 0, 0, 0,
-		 			0, 1, 0, 0,
-					0, 0, 1, 0.027,
-					0, 0, 0, 1;
+		 								0, 1, 0, 0,
+										0, 0, 1, 0.027,
+										0, 0, 0, 1;
 	
-	// copy the original transform in case it is needed to transform the cloud later.
+		// copy the original transform in case it is needed to transform the cloud later.
   	Eigen::Matrix4f originalTm = Tm;
-  	// calculate center of lifting eye tranform
-  	Tm = centerOffset * Tm;
+  	// Move the transform to point to the center of lifting eye instead of the the top
+  	Tm =   Tm * centerOffset;
 
-	tf::Vector3 origin;
+		//Create tf objects necessary to publish TF. They cannot be created from Eigen objects.
+		tf::Vector3 origin; // origin will be the center of the lifgint
   	origin.setValue(static_cast<double>(Tm(0,3)),static_cast<double>(Tm(1,3)),static_cast<double>(Tm(2,3)));
-  	tf::Matrix3x3 tf3d;
+  	tf::Matrix3x3 tf3d; // Create tf matrix and set rotation values manually from Eigen matrix (Tm)
   	tf3d.setValue(	static_cast<double>(Tm(0,0)), static_cast<double>(Tm(0,1)), static_cast<double>(Tm(0,2)), 
-					static_cast<double>(Tm(1,0)), static_cast<double>(Tm(1,1)), static_cast<double>(Tm(1,2)), 
-					static_cast<double>(Tm(2,0)), static_cast<double>(Tm(2,1)), static_cast<double>(Tm(2,2)));
-
-  	tf::Quaternion TmQt;
-  	tf3d.getRotation(TmQt);
-
-  	tf::Transform transform;
-  	transform.setOrigin(origin);
-  	transform.setRotation(TmQt);
-	static tf::TransformBroadcaster br;
+										static_cast<double>(Tm(1,0)), static_cast<double>(Tm(1,1)), static_cast<double>(Tm(1,2)), 
+										static_cast<double>(Tm(2,0)), static_cast<double>(Tm(2,1)), static_cast<double>(Tm(2,2)));
+  	tf::Quaternion TmQt; // Create quadternion object
+  	tf3d.getRotation(TmQt); // Set quadternion from tf matrix
+		//create transform TF to publish at center of lifting eye
+  	tf::Transform transform; // create tf transform object
+  	transform.setOrigin(origin); // set tf transform translation from tf vector
+  	transform.setRotation(TmQt); // set tf transform rotation from tf quadternion
+		static tf::TransformBroadcaster br; // create tf broadcaster object and publish tf
   	br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "camera_rgb_optical_frame", "lifting_eye"));
 
-  	
-	// Transform center of lifing eye line (cloud of 2 points)
-	cloudxyzptr cloud_arrow_transformed (new cloudxyz());	//points for arrow
-	pcl::transformPointCloud (*cloud_arrow, *cloud_arrow_transformed, Tm);
+		if (noMarkerServer) // create the marker server if this is the first time 
+		{
+			makeMarker();
+  		server->applyChanges();
+		}
+		
 
-	// Arrow Marker
-	visualization_msgs::Marker marker;
-    marker.header.frame_id = "/camera_rgb_optical_frame";
-    marker.header.stamp =  ros::Time::now();
-    marker.ns = "arrow";
-    marker.type = visualization_msgs::Marker::ARROW;
-    marker.action = visualization_msgs::Marker::ADD;
-    marker.id = 0;
-    // Arrow Scale
-    marker.scale.x = 0.015;
-    marker.scale.y = 0.025;
-    //marker.scale.y = 0.1;
-    // arrow is red
-    marker.color.r = 1.0;
-    marker.color.a = 0.5;
-	//set center point
-    geometry_msgs::Point p0;
-    p0.x = cloud_arrow_transformed->points[0].x;
-    p0.y = cloud_arrow_transformed->points[0].y;
-    p0.z = cloud_arrow_transformed->points[0].z;
-    marker.points.push_back(p0);
-	//set end point
-    geometry_msgs::Point p1;
-    p1.x = cloud_arrow_transformed->points[1].x;
-    p1.y = cloud_arrow_transformed->points[1].y;
-    p1.z = cloud_arrow_transformed->points[1].z;
-    marker.points.push_back(p1);
-
-
-    marker_pub.publish(marker);
-	
+		// Calculate Point and Pose msg for interactive marker upadte
+  	geometry_msgs::Point arrowPt;
+		arrowPt.x =  Tm(0,3);
+		arrowPt.y =  Tm(1,3);
+		arrowPt.z =  Tm(2,3);
+		geometry_msgs::Quaternion msgQt;
+		tf::quaternionTFToMsg (TmQt, msgQt);
+  	geometry_msgs::Pose arrowPose;
+		arrowPose.position = arrowPt;
+		arrowPose.orientation = msgQt;	
+		// apply changes to interactive marker server
+  	server->setPose("button", arrowPose);
+		server->applyChanges();
   }
 }
 
@@ -208,6 +272,9 @@ main (int argc, char** argv)
   // Initialize ROS
   ros::init (argc, argv, "picked_icp");
   ros::NodeHandle nh;
+
+  server.reset( new interactive_markers::InteractiveMarkerServer("picked_icp","",false) );
+  ros::Duration(0.1).sleep();
 
   // prep for arrow marker
   pcl::PointXYZ centerPt;
@@ -223,9 +290,9 @@ main (int argc, char** argv)
 
   //create rotation matrix
   Tm180 << 	-1, 0, 0, 0,
-		0, -1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1;
+						0, -1, 0, 0,
+						0, 0, 1, 0,
+						0, 0, 0, 1;
 
   // Create a ROS subscriber for the clicked point
   ros::Subscriber sub1 = nh.subscribe ("/clicked_point", 1, point_cb);
@@ -240,11 +307,19 @@ main (int argc, char** argv)
   pub1 = nh.advertise<sensor_msgs::PointCloud2> ("/aligned_cloud", 1);
 
   // Create publisher for the marker
-  marker_pub = nh.advertise<visualization_msgs::Marker>("visualization_marker", 10);
+  // marker_pub = nh.advertise<visualization_msgs::Marker>("visualization_marker", 10);
 
   // Load PDC file of source (lifting eye)
-  pcl::io::loadPCDFile<pcl::PointXYZRGB>("/home/taylor/src/data_pcd/top/lifting_eye_aligned_m.pcd", *cloud_source);
+  std::string packPath = ros::package::getPath("pick");
+	std::string pcdPath = "/src/pcd_files/lifting_eye_aligned_m.pcd";
+	pcdPath = packPath + pcdPath;
+  pcl::io::loadPCDFile<pcl::PointXYZRGB>(pcdPath, *cloud_source);
+
+  //makeMarker();
+  //server->applyChanges();
 
   // Spin
   ros::spin ();
+
+  server.reset();
 }

@@ -1,0 +1,8 @@
+prefix=/home/taylor/src/ros/catkin_ws/install
+
+Name: me539
+Description: Description of me539
+Version: 1.0.0
+Cflags: 
+Libs: -L/home/taylor/src/ros/catkin_ws/install/lib 
+Requires: 

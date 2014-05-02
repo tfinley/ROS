@@ -1,0 +1,15 @@
+<launch>
+
+  <node name="scrnout" pkg="rjclab2" type="output.py" output="screen" launch-prefix="xterm -e"/>
+
+  <node name="worker1node" pkg="rjclab2" type="workbench1.py"/>
+
+  <node name="worker2node" pkg="rjclab2" type="workbench2.py"/>
+
+  <node name="rawmat" pkg="rjclab2" type="rawmat.py"/>
+
+  <node name="robotplan" pkg="rjclab2" type="robotplan.py" output="screen" launch-prefix="xterm -e"/>
+
+  <node name="puppetmaster" pkg="rjclab2" type="puppetmstr.py" output="screen" launch-prefix="xterm -e"/>
+
+</launch>

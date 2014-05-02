@@ -1,0 +1,7 @@
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d /home/taylor/.rviz/lifting_eye.rviz"/>
+  <node name="picked_segmentation_sphere" pkg="spheres" type="picked_segmentation_sphere" output="screen"/>
+  <node name="picked_icp_sphere" pkg="spheres" type="picked_icp_sphere" output="screen"/>
+  <node pkg="dynamic_reconfigure" type="dynparam" name="dynparam" args="set /camera/driver depth_registration true" />
+</launch>
+

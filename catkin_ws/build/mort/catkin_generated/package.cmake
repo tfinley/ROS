@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "mort")
+set(mort_MAINTAINER "taylor <finley.taylor@gmail.com>")
+set(mort_DEPRECATED "")
+set(mort_VERSION "0.0.0")
+set(mort_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(mort_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(mort_BUILDTOOL_DEPENDS "catkin")

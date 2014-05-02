@@ -2,7 +2,7 @@ prefix=/home/taylor/src/ros/catkin_ws/devel
 
 Name: pick
 Description: Description of pick
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/taylor/src/ros/catkin_ws/devel/lib 
-Requires: 
+Version: 0.1.0
+Cflags: -I/home/taylor/src/ros/catkin_ws/devel/include -I/home/taylor/src/ros/catkin_ws/src/pick/include
+Libs: -L/home/taylor/src/ros/catkin_ws/devel/lib -lpick
+Requires: pcl_conversions pcl_ros roscpp sensor_msgs rospy std_msgs message_runtime rospkg

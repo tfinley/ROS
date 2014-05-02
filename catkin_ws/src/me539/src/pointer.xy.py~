@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+# Author: Taylor Finley
+# Date: 2014.02.05
+# Description: This node is designed to conrtrol a robot with a laserscan
+#				output which this will subsribe to and determine when the 
+#				robot should stop before it hits a wall. The control will
+# 				be by publishing a twist msg that the robot is subscribed
+# 				add param depth_registration:=false to end of launch command
+
+# Every python controller needs these lines
+import roslib; roslib.load_manifest('me539')
+import rospy 
+import numpy as np
+import math
+
+# The velocity command message
+from geometry_msgs.msg import Point
+
+# LaserScan message lib
+from sensor_msgs.msg import LaserScan
+
+# Float32 message lib
+from std_msgs.msg import Float32
+
+# Define global variable
+laserOffset = 0.12
+targetDist = rospy.get_param('/move/target_distance', .5)
+targetDist = targetDist + laserOffset 
+slowZone = 0.2 + targetDist
+
+
+def scan_callback(data):
+	minDist = 100;
+	pts=[]
+	# Calculate min distance from laserscan (data)
+	dists = data.ranges
+	# filter out nan values
+	distArray = np.array(dists)
+	whereNans = np.isnan(distArray)
+	distArray[whereNans] = 100
+	# Get min angle
+	minSensorAngle = data.angle_min
+	# Get anlge increment between range values
+	angleInc = data.angle_increment
+	# Calcultee min distance between desired angles
+	for i in range(len(dists)):
+		#calculate angles
+		theta = minSensorAngle + angleInc*i #remember that i starts with 0
+		pts[i,1] = distArray[i]*math.sin(theta) # x pts
+		pts[i,2] = distArray[i]*math.cos(theta)
+ 
+	print('pts', pts)
+
+	
+
+	# Publish point
+	#pub.publish(pt)
+
+	
+
+
+
+if __name__ == '__main__':
+	rospy.init_node('move')
+
+	# A subscriber to recieve data from the robot's laserscan
+	sub = rospy.Subscriber('scan', LaserScan, scan_callback)
+
+	# A publisher for minimum distance read
+	pub = rospy.Publisher('dist', Float32)
+
+	# Do ROS stuff
+	rospy.spin()
+
+   

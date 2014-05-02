@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "me539")
+set(me539_MAINTAINER "taylor <finley.taylor@gmail.com>")
+set(me539_DEPRECATED "")
+set(me539_VERSION "1.0.0")
+set(me539_BUILD_DEPENDS "roscpp" "rospy" "std_msgs")
+set(me539_RUN_DEPENDS "roscpp" "rospy" "std_msgs")
+set(me539_BUILDTOOL_DEPENDS "catkin")

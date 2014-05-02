@@ -1,0 +1,28 @@
+<launch>
+	<arg name="hmi" />
+	<arg name="user" />
+	<arg name="iter" default="0" />
+
+	<rosparam command="delete" param="study/hmi" />
+	<rosparam command="delete" param="study/user_number" />
+
+
+  	<param name= "study/hmi" value="$(arg hmi)" />
+  	<param name= "study/user_number" value="$(arg user)" />
+   	<param name= "study/scene_number" value = "0" />
+   	<param name= "study/part_number" value = "0" />
+   	<param name= "study/iter" value = "$(arg iter)" />
+
+	<node name="publish_scene" pkg="pick" type="publish_scene" />
+
+	<node name="publish_part_image" pkg="pick" type="publish_part_image" />
+
+	<node name="study_master" pkg="pick" type="study_master.py"  output="screen" launch-prefix="xterm -e"/>
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find pick)/rviz/user_study.rviz"/>
+
+	<node name="image_view" pkg="image_view" type="image_view" args="image:=/study/part_image"/>
+
+	<node name="study_buttons" pkg="pick" type="study_buttons" />
+		
+</launch>
